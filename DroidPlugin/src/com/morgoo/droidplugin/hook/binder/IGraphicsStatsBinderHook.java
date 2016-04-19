@@ -26,9 +26,7 @@ import android.content.Context;
 import android.os.IBinder;
 
 import com.morgoo.droidplugin.hook.BaseHookHandle;
-import com.morgoo.droidplugin.hook.handle.IClipboardHookHandle;
 import com.morgoo.droidplugin.hook.handle.IGraphicsStatsHookHandle;
-import com.morgoo.helper.compat.IClipboardCompat;
 import com.morgoo.helper.compat.IGraphicsStatsCompat;
 
 /**

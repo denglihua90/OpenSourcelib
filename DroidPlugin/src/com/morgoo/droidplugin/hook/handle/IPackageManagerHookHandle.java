@@ -38,7 +38,6 @@ import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Parcelable;
-import android.os.RemoteException;
 import android.text.TextUtils;
 
 import com.morgoo.droidplugin.hook.BaseHookHandle;

@@ -23,11 +23,9 @@
 package com.morgoo.droidplugin.hook.handle;
 
 import android.content.Context;
-import android.view.WindowManager;
 
 import com.morgoo.droidplugin.hook.BaseHookHandle;
 import com.morgoo.droidplugin.hook.HookedMethodHandler;
-import com.morgoo.droidplugin.hook.proxy.IContentProviderHook;
 import com.morgoo.droidplugin.hook.proxy.IWindowSessionHook;
 import com.morgoo.droidplugin.reflect.Utils;
 import com.morgoo.helper.MyProxy;

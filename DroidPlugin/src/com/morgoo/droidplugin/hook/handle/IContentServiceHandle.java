@@ -33,7 +33,6 @@ import com.morgoo.droidplugin.pm.PluginManager;
 import com.morgoo.helper.Log;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 
 /**
  * Created by Andy Zhang(zhangyong232@gmail.com) on 2015/5/21.

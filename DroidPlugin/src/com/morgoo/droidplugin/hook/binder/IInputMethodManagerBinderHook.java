@@ -27,10 +27,8 @@ import android.os.IBinder;
 import android.view.inputmethod.InputMethodManager;
 
 import com.morgoo.droidplugin.hook.BaseHookHandle;
-import com.morgoo.droidplugin.hook.handle.IAudioServiceHookHandle;
 import com.morgoo.droidplugin.hook.handle.IInputMethodManagerHookHandle;
 import com.morgoo.droidplugin.reflect.FieldUtils;
-import com.morgoo.helper.compat.IAudioServiceCompat;
 import com.morgoo.helper.compat.IInputMethodManagerCompat;
 
 /**

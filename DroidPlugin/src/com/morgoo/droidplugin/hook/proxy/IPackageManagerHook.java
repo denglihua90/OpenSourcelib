@@ -22,23 +22,16 @@
 
 package com.morgoo.droidplugin.hook.proxy;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
 
 import com.morgoo.droidplugin.hook.BaseHookHandle;
 import com.morgoo.droidplugin.hook.handle.IPackageManagerHookHandle;
-import com.morgoo.droidplugin.reflect.Utils;
-import com.morgoo.helper.Log;
-import com.morgoo.helper.compat.ActivityThreadCompat;
-import com.morgoo.helper.MyProxy;
 import com.morgoo.droidplugin.reflect.FieldUtils;
+import com.morgoo.droidplugin.reflect.Utils;
+import com.morgoo.helper.MyProxy;
+import com.morgoo.helper.compat.ActivityThreadCompat;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-import java.util.Arrays;
 import java.util.List;
 
 

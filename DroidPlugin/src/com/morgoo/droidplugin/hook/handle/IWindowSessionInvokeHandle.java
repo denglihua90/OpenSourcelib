@@ -28,7 +28,6 @@ import android.view.WindowManager;
 
 import com.morgoo.droidplugin.hook.BaseHookHandle;
 import com.morgoo.droidplugin.hook.HookedMethodHandler;
-import com.morgoo.droidplugin.pm.PluginManager;
 
 import java.lang.reflect.Method;
 

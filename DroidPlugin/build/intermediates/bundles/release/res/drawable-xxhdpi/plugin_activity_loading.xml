@@ -24,4 +24,4 @@
 -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/plugin_activity_loading_bitmap" />
-</layer-list><!-- From: file:/D:/AndroidStudioProjects/2016325/OpenSourcelib/DroidPlugin/res/drawable-xxhdpi/plugin_activity_loading.xml -->
+</layer-list><!-- From: file:/D:/GitHub/OpenSourcelib/DroidPlugin/res/drawable-xxhdpi/plugin_activity_loading.xml -->

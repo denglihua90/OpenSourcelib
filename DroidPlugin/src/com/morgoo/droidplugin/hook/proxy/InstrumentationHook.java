@@ -27,11 +27,10 @@ import android.content.Context;
 
 import com.morgoo.droidplugin.hook.BaseHookHandle;
 import com.morgoo.droidplugin.hook.Hook;
-import com.morgoo.droidplugin.hook.handle.PluginCallback;
 import com.morgoo.droidplugin.hook.handle.PluginInstrumentation;
-import com.morgoo.helper.compat.ActivityThreadCompat;
-import com.morgoo.helper.Log;
 import com.morgoo.droidplugin.reflect.FieldUtils;
+import com.morgoo.helper.Log;
+import com.morgoo.helper.compat.ActivityThreadCompat;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

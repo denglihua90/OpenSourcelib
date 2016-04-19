@@ -35,8 +35,6 @@ import android.content.pm.ServiceInfo;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 
-import com.morgoo.droidplugin.reflect.FieldUtils;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

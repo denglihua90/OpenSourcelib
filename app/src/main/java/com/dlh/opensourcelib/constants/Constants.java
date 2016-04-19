@@ -7,4 +7,6 @@ package com.dlh.opensourcelib.constants;
  */
 public class Constants {
     public final static String APP_BEAN_KEY = "APP_BEAN_KEY";
+
+    public final static  String BMOB_APP_ID="011f2d901a982ed3b5ce8f76e6a1cba1";
 }

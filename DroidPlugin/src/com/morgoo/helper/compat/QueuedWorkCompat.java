@@ -24,8 +24,6 @@ package com.morgoo.helper.compat;
 
 import com.morgoo.droidplugin.reflect.MethodUtils;
 
-import java.lang.reflect.InvocationTargetException;
-
 /**
  * Created by Andy Zhang(zhangyong232@gmail.com) on 2015/5/1.
  */

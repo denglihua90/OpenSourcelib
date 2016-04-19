@@ -26,13 +26,10 @@ import android.content.Context;
 import android.content.pm.ProviderInfo;
 import android.net.Uri;
 import android.net.Uri.Builder;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.text.TextUtils;
 
 import com.morgoo.droidplugin.core.Env;
 import com.morgoo.droidplugin.hook.BaseHookHandle;
-import com.morgoo.droidplugin.hook.HookedMethodHandler;
 
 import java.lang.reflect.Method;
 

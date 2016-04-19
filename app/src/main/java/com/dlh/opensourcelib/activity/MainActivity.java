@@ -1,7 +1,14 @@
 package com.dlh.opensourcelib.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,45 +19,78 @@ import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.dlh.opensourcelib.R;
 import com.dlh.opensourcelib.bean.AppBean;
+import com.dlh.opensourcelib.fragment.MyMenuFragment;
+import com.dlh.opensourcelib.utils.HorizontalItemDecoration;
+import com.dlh.opensourcelib.utils.VerticalItemDecoration;
+import com.mxn.soul.flowingdrawer_core.FlowingView;
+import com.mxn.soul.flowingdrawer_core.LeftDrawerLayout;
 import com.pacific.adapter.Adapter;
 import com.pacific.adapter.AdapterHelper;
+import com.pacific.adapter.RecyclerAdapter;
+import com.pacific.adapter.RecyclerAdapterHelper;
 
 import org.json.JSONArray;
 
 import java.util.List;
 
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindCallback;
 
 public class MainActivity extends AppCompatActivity {
-    private ListView lv;
+    private RecyclerView lv;
 
-    private Adapter adapter;
+//    private Adapter adapter;
+
+    private RecyclerAdapter recyclerAdapter;
+    private LeftDrawerLayout mLeftDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Bmob.initialize(this, "011f2d901a982ed3b5ce8f76e6a1cba1");
-        lv = (ListView) findViewById(R.id.lv);
+        setupToolbar();
+        mLeftDrawerLayout = (LeftDrawerLayout) findViewById(R.id.id_drawerlayout);
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment mMenuFragment = fm.findFragmentById(R.id.id_container_menu);
+        FlowingView mFlowingView = (FlowingView) findViewById(R.id.sv);
+        if (mMenuFragment == null) {
+            fm.beginTransaction().add(R.id.id_container_menu, mMenuFragment = new MyMenuFragment()).commit();
+        }
+        mLeftDrawerLayout.setFluidView(mFlowingView);
+        mLeftDrawerLayout.setMenuFragment((MyMenuFragment) mMenuFragment);
 
-        adapter = new Adapter<AppBean>(this, R.layout.adapter_item) {
+        lv = (RecyclerView) findViewById(R.id.lv);
+        lv.setLayoutManager(new StaggeredGridLayoutManager(3,
+                StaggeredGridLayoutManager.VERTICAL));
+//        adapter = new Adapter<AppBean>(this, R.layout.adapter_item) {
+//            @Override
+//            protected void convert(AdapterHelper adapterHelper, AppBean appBean) {
+//                adapterHelper.setText(R.id.tv, appBean.getTitle());
+//                ImageView iv = (ImageView) adapterHelper.getItemView().findViewById(R.id.iv);
+//                Glide.with(MainActivity.this).load(appBean.getThumbFile().getFileUrl(MainActivity.this)).placeholder(R.drawable.plugin_activity_loading).error(R.drawable.plugin_activity_loading).into(iv);
+//            }
+//        };
+//        lv.setAdapter(adapter);
+//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                AppBean appBean = (AppBean) parent.getAdapter().getItem(position);
+//                DetailsInfoActivity.toDetailsInfoActivity(MainActivity.this, appBean);
+//            }
+//        });
+
+        recyclerAdapter = new RecyclerAdapter<AppBean>(this, R.layout.adapter_item) {
             @Override
-            protected void convert(AdapterHelper adapterHelper, AppBean appBean) {
-                adapterHelper.setText(R.id.tv, appBean.getTitle());
-                ImageView iv = (ImageView) adapterHelper.getItemView().findViewById(R.id.iv);
+            protected void convert(RecyclerAdapterHelper recyclerAdapterHelper, AppBean appBean) {
+                recyclerAdapterHelper.setText(R.id.tv, appBean.getTitle());
+                ImageView iv = (ImageView) recyclerAdapterHelper.getItemView().findViewById(R.id.iv);
                 Glide.with(MainActivity.this).load(appBean.getThumbFile().getFileUrl(MainActivity.this)).placeholder(R.drawable.plugin_activity_loading).error(R.drawable.plugin_activity_loading).into(iv);
             }
         };
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AppBean appBean = (AppBean) parent.getAdapter().getItem(position);
-                DetailsInfoActivity.toDetailsInfoActivity(MainActivity.this, appBean);
-            }
-        });
+
+        lv.setAdapter(recyclerAdapter);
+
+
         queryData();
     }
 
@@ -74,9 +114,9 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("dlh", "appBean:" + appBean.getGitHub());
                     Log.i("dlh", "appBean:getPlun-->" + appBean.getPlun());
 //                    Log.i("dlh", "appBean:getFilename()--->" + appBean.getPlun().getFilename());
-                    Log.i("dlh", "appBean:getFileUrl--->" + appBean.getPlun().getFileUrl(MainActivity.this));
+//                    Log.i("dlh", "appBean:getFileUrl--->" + appBean.getPlun().getFileUrl(MainActivity.this));
                 }
-                adapter.addAll(list);
+                recyclerAdapter.addAll(list);
             }
 
             @Override
@@ -87,4 +127,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    protected void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_menu_white);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mLeftDrawerLayout.toggle();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mLeftDrawerLayout.isShownMenu()) {
+            mLeftDrawerLayout.closeDrawer();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

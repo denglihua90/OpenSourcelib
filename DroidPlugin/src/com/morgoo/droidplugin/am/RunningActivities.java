@@ -1,13 +1,10 @@
 package com.morgoo.droidplugin.am;
 
 import android.app.Activity;
-import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.Build;
 
 import com.morgoo.droidplugin.pm.PluginManager;
-import com.morgoo.helper.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;

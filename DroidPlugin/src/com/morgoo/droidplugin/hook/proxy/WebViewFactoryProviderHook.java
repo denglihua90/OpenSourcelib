@@ -23,20 +23,14 @@
 package com.morgoo.droidplugin.hook.proxy;
 
 import android.content.Context;
-import android.os.Build;
-import android.webkit.WebView;
 
 import com.morgoo.droidplugin.hook.BaseHookHandle;
-import com.morgoo.droidplugin.hook.HookedMethodHandler;
 import com.morgoo.droidplugin.hook.handle.WebViewFactoryProviderHookHandle;
 import com.morgoo.droidplugin.reflect.FieldUtils;
-import com.morgoo.droidplugin.reflect.MethodUtils;
 import com.morgoo.droidplugin.reflect.Utils;
 import com.morgoo.helper.MyProxy;
 import com.morgoo.helper.compat.WebViewFactoryCompat;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import java.util.List;
 
 /**
