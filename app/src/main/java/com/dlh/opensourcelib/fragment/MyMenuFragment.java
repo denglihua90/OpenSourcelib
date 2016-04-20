@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.dlh.opensourcelib.R;
 import com.mxn.soul.flowingdrawer_core.MenuFragment;
@@ -44,10 +43,10 @@ public class MyMenuFragment extends MenuFragment {
     }
 
     public void onOpenMenu() {
-        Toast.makeText(getActivity(), "onOpenMenu", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "onOpenMenu", Toast.LENGTH_SHORT).show();
     }
 
     public void onCloseMenu() {
-        Toast.makeText(getActivity(), "onCloseMenu", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "onCloseMenu", Toast.LENGTH_SHORT).show();
     }
 }

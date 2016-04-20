@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.mxn.soul.flowingdrawer_core.LeftDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<com.mxn.soul.flowingdrawer_core.LeftDrawerLayout
     android:id="@+id/id_drawerlayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false">
@@ -12,13 +13,21 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/lv"
+        <GridView
+            android:id="@+id/list_gridview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/dlh_white"
+            android:fadingEdge="none"
+            android:focusable="false"
+            android:horizontalSpacing="10dp"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="3"
+            android:padding="12dp"
             android:scrollbars="none"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="10dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -27,7 +36,7 @@
 
             <include
                 android:id="@+id/toolbar"
-                layout="@layout/view_feed_toolbar" />
+                layout="@layout/view_feed_toolbar"/>
         </android.support.design.widget.AppBarLayout>
 
     </android.support.design.widget.CoordinatorLayout>
@@ -42,7 +51,7 @@
         <com.mxn.soul.flowingdrawer_core.FlowingView
             android:id="@+id/sv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
         <FrameLayout
             android:id="@+id/id_container_menu"
@@ -50,7 +59,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="25dp"
-            android:paddingRight="10dp" />
+            android:paddingRight="10dp"/>
     </RelativeLayout>
 
 </com.mxn.soul.flowingdrawer_core.LeftDrawerLayout>

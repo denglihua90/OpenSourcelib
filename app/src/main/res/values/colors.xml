@@ -8,5 +8,6 @@
     <color name="fab_color_shadow">#44000000</color>
     <color name="text_like_counter">#2b5a83</color>
     <color name="paint_color">#dddddd</color>
-
+    <color name="dlh_white">#ffffff</color>
+    <color name="cube_mints_f1f1f1">#f1f1f1</color>
 </resources>

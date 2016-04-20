@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/D:/GitHub/OpenSourcelib/DroidPlugin/res/values-v11/styles.xml -->
+    <!-- From: file:/Users/dlh/Desktop/OpenSourcelib/DroidPlugin/res/values-v11/styles.xml -->
     <eat-comment/>
     <style name="DroidPluginTheme" parent="android:Theme.Holo.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/plugin_activity_loading</item>

@@ -15,7 +15,14 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        mavenCentral();
         //Bmob的maven仓库地址，必须填写
         maven { url "https://raw.github.com/bmob/bmob-android-sdk/master" }
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/releases'
+        }
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/snapshots'
+        }
     }
 }
