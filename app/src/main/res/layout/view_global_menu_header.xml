@@ -4,17 +4,19 @@
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
     android:clickable="true">
+
     <LinearLayout
         android:id="@+id/vGlobalMenuHeader"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="24dp">
 
         <ImageView
             android:id="@+id/ivMenuUserProfilePhoto"
             android:layout_width="@dimen/global_menu_avatar_size"
             android:layout_height="@dimen/global_menu_avatar_size"
-            android:src="@mipmap/ic_launcher"
-            android:layout_margin="12dp" />
+            android:layout_margin="12dp"
+            android:src="@mipmap/ic_launcher" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,7 +35,7 @@
             android:layout_margin="16dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_global_menu_search"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </LinearLayout>
 
