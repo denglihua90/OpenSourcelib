@@ -3,7 +3,6 @@ package com.morgoo.droidplugin.hook.handle;
 import android.content.Context;
 import android.os.Build;
 import android.os.RemoteException;
-
 import com.morgoo.droidplugin.hook.HookedMethodHandler;
 import com.morgoo.droidplugin.pm.PluginManager;
 

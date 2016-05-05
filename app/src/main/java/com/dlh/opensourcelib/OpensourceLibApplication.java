@@ -1,9 +1,8 @@
 package com.dlh.opensourcelib;
 
+import cn.bmob.v3.Bmob;
 import com.dlh.opensourcelib.constants.Constants;
 import com.morgoo.droidplugin.PluginApplication;
-
-import cn.bmob.v3.Bmob;
 
 /**
  * @TODO:

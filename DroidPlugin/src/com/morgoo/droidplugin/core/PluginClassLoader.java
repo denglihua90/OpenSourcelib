@@ -23,13 +23,11 @@
 package com.morgoo.droidplugin.core;
 
 import android.os.Build;
-
 import com.morgoo.helper.Log;
+import dalvik.system.DexClassLoader;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import dalvik.system.DexClassLoader;
 
 /**
  * Created by Andy Zhang(zhangyong232@gmail.com) on 2015/2/4.

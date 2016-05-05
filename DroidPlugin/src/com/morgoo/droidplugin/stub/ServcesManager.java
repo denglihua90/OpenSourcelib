@@ -32,7 +32,6 @@ import android.content.pm.ServiceInfo;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.IBinder;
-
 import com.morgoo.droidplugin.core.Env;
 import com.morgoo.droidplugin.core.PluginProcessManager;
 import com.morgoo.droidplugin.pm.PluginManager;

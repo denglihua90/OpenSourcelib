@@ -27,7 +27,6 @@ import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.os.Bundle;
-
 import com.morgoo.droidplugin.core.Env;
 import com.morgoo.droidplugin.pm.PluginManager;
 

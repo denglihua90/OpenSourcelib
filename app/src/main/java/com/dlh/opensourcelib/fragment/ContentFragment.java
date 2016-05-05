@@ -10,23 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindCallback;
 import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dlh.opensourcelib.R;
 import com.dlh.opensourcelib.activity.DetailsInfoActivity;
-import com.dlh.opensourcelib.activity.MainActivity;
 import com.dlh.opensourcelib.bean.AppBean;
 import com.pacific.adapter.RecyclerAdapter;
 import com.pacific.adapter.RecyclerAdapterHelper;
-
 import org.json.JSONArray;
 
 import java.util.List;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindCallback;
 
 /**
  * A simple {@link Fragment} subclass.

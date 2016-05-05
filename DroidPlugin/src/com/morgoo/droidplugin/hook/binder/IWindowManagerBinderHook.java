@@ -25,7 +25,6 @@ package com.morgoo.droidplugin.hook.binder;
 import android.app.Activity;
 import android.content.Context;
 import android.os.IBinder;
-
 import com.morgoo.droidplugin.hook.BaseHookHandle;
 import com.morgoo.droidplugin.hook.handle.IWindowManagerHookHandle;
 import com.morgoo.droidplugin.reflect.FieldUtils;

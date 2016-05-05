@@ -25,7 +25,6 @@ package com.morgoo.droidplugin.hook.binder;
 import android.content.Context;
 import android.os.IBinder;
 import android.view.inputmethod.InputMethodManager;
-
 import com.morgoo.droidplugin.hook.BaseHookHandle;
 import com.morgoo.droidplugin.hook.handle.IInputMethodManagerHookHandle;
 import com.morgoo.droidplugin.reflect.FieldUtils;

@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 import com.dlh.opensourcelib.R;
 import com.dlh.opensourcelib.utils.GlideCircleTransform;

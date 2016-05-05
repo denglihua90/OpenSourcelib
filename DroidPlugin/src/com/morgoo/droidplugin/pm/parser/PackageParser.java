@@ -24,18 +24,9 @@ package com.morgoo.droidplugin.pm.parser;
 
 import android.content.Context;
 import android.content.IntentFilter;
-import android.content.pm.ActivityInfo;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.InstrumentationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PermissionGroupInfo;
-import android.content.pm.PermissionInfo;
-import android.content.pm.ProviderInfo;
-import android.content.pm.ServiceInfo;
-import android.content.pm.Signature;
+import android.content.pm.*;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
-
 import com.morgoo.helper.compat.SystemPropertiesCompat;
 
 import java.io.File;

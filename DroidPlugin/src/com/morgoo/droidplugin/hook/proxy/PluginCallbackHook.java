@@ -24,7 +24,6 @@ package com.morgoo.droidplugin.hook.proxy;
 
 import android.content.Context;
 import android.os.Handler;
-
 import com.morgoo.droidplugin.hook.BaseHookHandle;
 import com.morgoo.droidplugin.hook.Hook;
 import com.morgoo.droidplugin.hook.handle.PluginCallback;

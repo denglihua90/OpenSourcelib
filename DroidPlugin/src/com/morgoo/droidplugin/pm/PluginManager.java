@@ -23,26 +23,13 @@
 package com.morgoo.droidplugin.pm;
 
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.ServiceConnection;
-import android.content.pm.ActivityInfo;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
+import android.content.*;
+import android.content.pm.*;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.PermissionGroupInfo;
-import android.content.pm.PermissionInfo;
-import android.content.pm.ProviderInfo;
-import android.content.pm.ResolveInfo;
-import android.content.pm.ServiceInfo;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.text.TextUtils;
-
 import com.morgoo.droidplugin.PluginManagerService;
 import com.morgoo.droidplugin.reflect.MethodUtils;
 import com.morgoo.helper.Log;

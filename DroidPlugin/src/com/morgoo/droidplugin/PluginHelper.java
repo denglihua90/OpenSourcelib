@@ -29,7 +29,6 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.MessageQueue;
-
 import com.morgoo.droidplugin.core.PluginProcessManager;
 import com.morgoo.droidplugin.pm.PluginManager;
 import com.morgoo.droidplugin.reflect.FieldUtils;

@@ -23,7 +23,6 @@
 package com.morgoo.droidplugin.hook;
 
 import android.content.Context;
-
 import com.morgoo.helper.Log;
 
 import java.lang.reflect.Method;

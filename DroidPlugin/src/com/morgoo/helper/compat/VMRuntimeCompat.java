@@ -23,7 +23,6 @@
 package com.morgoo.helper.compat;
 
 import android.os.Build;
-
 import com.morgoo.droidplugin.reflect.MethodUtils;
 import com.morgoo.helper.Log;
 

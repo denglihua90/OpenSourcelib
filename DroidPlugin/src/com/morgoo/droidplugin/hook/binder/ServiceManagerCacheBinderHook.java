@@ -25,7 +25,6 @@ package com.morgoo.droidplugin.hook.binder;
 import android.content.Context;
 import android.os.IBinder;
 import android.text.TextUtils;
-
 import com.morgoo.droidplugin.hook.BaseHookHandle;
 import com.morgoo.droidplugin.hook.Hook;
 import com.morgoo.droidplugin.hook.HookedMethodHandler;

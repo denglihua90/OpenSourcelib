@@ -25,29 +25,15 @@ package com.morgoo.droidplugin.pm.parser;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.IntentFilter;
-import android.content.pm.ActivityInfo;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.InstrumentationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PermissionGroupInfo;
-import android.content.pm.PermissionInfo;
-import android.content.pm.ProviderInfo;
-import android.content.pm.ServiceInfo;
-import android.content.pm.Signature;
+import android.content.pm.*;
 import android.os.Build;
 import android.text.TextUtils;
-
 import com.morgoo.droidplugin.core.PluginDirHelper;
 import com.morgoo.droidplugin.reflect.FieldUtils;
 import com.morgoo.helper.ComponentNameComparator;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * 解析插件apk

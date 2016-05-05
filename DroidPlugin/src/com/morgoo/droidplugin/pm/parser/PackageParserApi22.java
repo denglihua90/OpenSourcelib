@@ -26,7 +26,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.os.Build;
-
 import com.morgoo.droidplugin.reflect.MethodUtils;
 import com.morgoo.helper.Log;
 

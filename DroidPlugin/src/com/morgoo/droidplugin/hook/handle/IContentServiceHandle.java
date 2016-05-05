@@ -25,7 +25,6 @@ package com.morgoo.droidplugin.hook.handle;
 import android.content.Context;
 import android.content.pm.ProviderInfo;
 import android.net.Uri;
-
 import com.morgoo.droidplugin.core.Env;
 import com.morgoo.droidplugin.hook.BaseHookHandle;
 import com.morgoo.droidplugin.hook.HookedMethodHandler;

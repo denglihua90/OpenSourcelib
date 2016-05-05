@@ -24,7 +24,6 @@ package com.morgoo.droidplugin.pm.parser;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
-
 import com.morgoo.droidplugin.reflect.MethodUtils;
 import com.morgoo.helper.Log;
 

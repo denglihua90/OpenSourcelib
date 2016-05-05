@@ -28,7 +28,6 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.os.Environment;
-
 import com.morgoo.helper.Log;
 import com.morgoo.helper.compat.SystemPropertiesCompat;
 

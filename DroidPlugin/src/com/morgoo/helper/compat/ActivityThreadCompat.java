@@ -25,7 +25,6 @@ package com.morgoo.helper.compat;
 import android.app.Instrumentation;
 import android.os.Handler;
 import android.os.Looper;
-
 import com.morgoo.droidplugin.reflect.MethodUtils;
 
 import java.lang.reflect.InvocationTargetException;

@@ -36,7 +36,6 @@ import android.os.Build.VERSION_CODES;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RemoteViews;
-
 import com.morgoo.droidplugin.core.PluginProcessManager;
 import com.morgoo.droidplugin.hook.BaseHookHandle;
 import com.morgoo.droidplugin.hook.HookedMethodHandler;
