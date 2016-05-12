@@ -3,18 +3,18 @@
         <item
             android:id="@+id/menu_favorites"
             android:icon="@drawable/ic_global_menu_feed"
-            android:title="我的收藏"/>
+            android:title="本地收藏" />
         <item
-            android:id="@+id/menu_"
+            android:id="@+id/menu_share"
             android:icon="@drawable/ic_global_menu_direct"
-            android:title="应用分享"/>
+            android:title="应用分享" />
         <item
             android:id="@+id/menu_news"
             android:icon="@drawable/ic_global_menu_news"
-            android:title="问题反馈"/>
+            android:title="问题反馈" />
         <item
             android:id="@+id/menu_popular"
             android:icon="@drawable/ic_global_menu_popular"
-            android:title="关于我们"/>
+            android:title="关于我们" />
     </group>
 </menu>

@@ -10,5 +10,8 @@
     <string name="info_title">名称:</string>
     <string name="info_github">地址:</string>
     <string name="info_desc">描述:</string>
-    <string name="info_yunxing">运行</string>
+    <string name="info_yunxing">运行</string>\
+
+    <string name="favor">收藏</string>
+    <string name="share">分享</string>
 </resources>

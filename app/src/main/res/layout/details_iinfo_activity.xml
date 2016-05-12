@@ -2,6 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:cb="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -12,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:orientation="vertical">
-
 
         <include
             android:id="@+id/toolbar"
@@ -121,34 +121,64 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_h"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
-        <ImageView
+        <Button
+            android:id="@+id/favor_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_heart_small_blue"
             android:layout_gravity="center"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:background="@drawable/btn_selector"
+            android:text="@string/favor"
+            android:textColor="@color/text_like_counter" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_h"
+            android:layout_weight="2"
+            android:background="@drawable/btn_selector">
+
+            <Button
+                android:id="@+id/btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_selector"
+                android:text="@string/info_yunxing"
+                android:textColor="@color/text_like_counter"
+                android:visibility="visible" />
+
+            <com.dlh.opensourcelib.view.CBProgressBar
+                android:id="@+id/my_progress"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_h"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="8dp"
+                cb:isHorizonStroke="true"
+                cb:orientation="horizontal"
+                cb:percent_text_color="@color/percent_text_color_2"
+                cb:percent_text_size="@dimen/percent_text_size_large"
+                cb:progressBarBgColor="@color/progressbar_bg_color_1"
+                cb:progressColor="@color/progress_color_1"
+                cb:rect_round="@dimen/horizontal_corner" />
+        </RelativeLayout>
+
 
         <Button
-            android:id="@+id/btn"
+            android:id="@+id/share_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_selector"
-            android:text="@string/info_yunxing"
-            android:layout_weight="2"
-            android:textColor="@color/text_like_counter" />
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_heart_small_blue"
             android:layout_gravity="center"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:background="@drawable/btn_selector"
+            android:text="@string/share"
+            android:textColor="@color/text_like_counter" />
     </LinearLayout>
 
 </RelativeLayout>
