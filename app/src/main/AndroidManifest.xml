@@ -32,6 +32,9 @@
         <activity
             android:name=".activity.DetailsInfoActivity"
             android:label="@string/detailsinfo" />
+        <activity
+            android:name=".activity.FavoritesActivity"
+            android:label="@string/detailsinfo" />
     </application>
 
 </manifest>

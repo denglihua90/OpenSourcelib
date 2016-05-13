@@ -1,18 +1,26 @@
 [
     {
-        "merged": "/Users/dlh/Desktop/AndroidStudioProjects/OpenSourcelib/DroidPlugin/build/intermediates/res/merged/androidTest/debug/drawable-xxhdpi-v4/plugin_activity_loading_bitmap.9.png",
-        "source": "/Users/dlh/Desktop/AndroidStudioProjects/OpenSourcelib/DroidPlugin/build/intermediates/bundles/debug/res/drawable-xxhdpi-v4/plugin_activity_loading_bitmap.9.png"
+        "merged": "D:\\Users\\dlh\\Desktop\\AndroidStudioProjects\\OpenSourcelib\\DroidPlugin\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\plugin_activity_loading_bitmap.9.png",
+        "source": "D:\\Users\\dlh\\Desktop\\AndroidStudioProjects\\OpenSourcelib\\DroidPlugin\\build\\intermediates\\bundles\\debug\\res\\drawable-xxhdpi-v4\\plugin_activity_loading_bitmap.9.png"
     },
     {
-        "merged": "/Users/dlh/Desktop/OpenSourcelib/DroidPlugin/build/intermediates/res/merged/androidTest/debug/drawable-xxhdpi-v4/plugin_activity_loading.xml",
-        "source": "/Users/dlh/Desktop/OpenSourcelib/DroidPlugin/build/intermediates/bundles/debug/res/drawable-xxhdpi-v4/plugin_activity_loading.xml"
+        "merged": "D:\\Users\\dlh\\Desktop\\OpenSourcelib\\DroidPlugin\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\plugin_activity_loading_bitmap.9.png",
+        "source": "D:\\Users\\dlh\\Desktop\\OpenSourcelib\\DroidPlugin\\build\\intermediates\\bundles\\debug\\res\\drawable-xxhdpi-v4\\plugin_activity_loading_bitmap.9.png"
     },
     {
-        "merged": "/Users/dlh/Desktop/AndroidStudioProjects/OpenSourcelib/DroidPlugin/build/intermediates/res/merged/androidTest/debug/drawable-xxhdpi-v4/plugin_activity_loading.xml",
-        "source": "/Users/dlh/Desktop/AndroidStudioProjects/OpenSourcelib/DroidPlugin/build/intermediates/bundles/debug/res/drawable-xxhdpi-v4/plugin_activity_loading.xml"
+        "merged": "D:\\GitHub\\OpenSourcelib\\DroidPlugin\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\plugin_activity_loading.xml",
+        "source": "D:\\GitHub\\OpenSourcelib\\DroidPlugin\\build\\intermediates\\bundles\\debug\\res\\drawable-xxhdpi-v4\\plugin_activity_loading.xml"
     },
     {
-        "merged": "/Users/dlh/Desktop/OpenSourcelib/DroidPlugin/build/intermediates/res/merged/androidTest/debug/drawable-xxhdpi-v4/plugin_activity_loading_bitmap.9.png",
-        "source": "/Users/dlh/Desktop/OpenSourcelib/DroidPlugin/build/intermediates/bundles/debug/res/drawable-xxhdpi-v4/plugin_activity_loading_bitmap.9.png"
+        "merged": "D:\\Users\\dlh\\Desktop\\OpenSourcelib\\DroidPlugin\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\plugin_activity_loading.xml",
+        "source": "D:\\Users\\dlh\\Desktop\\OpenSourcelib\\DroidPlugin\\build\\intermediates\\bundles\\debug\\res\\drawable-xxhdpi-v4\\plugin_activity_loading.xml"
+    },
+    {
+        "merged": "D:\\GitHub\\OpenSourcelib\\DroidPlugin\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\plugin_activity_loading_bitmap.9.png",
+        "source": "D:\\GitHub\\OpenSourcelib\\DroidPlugin\\build\\intermediates\\bundles\\debug\\res\\drawable-xxhdpi-v4\\plugin_activity_loading_bitmap.9.png"
+    },
+    {
+        "merged": "D:\\Users\\dlh\\Desktop\\AndroidStudioProjects\\OpenSourcelib\\DroidPlugin\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\plugin_activity_loading.xml",
+        "source": "D:\\Users\\dlh\\Desktop\\AndroidStudioProjects\\OpenSourcelib\\DroidPlugin\\build\\intermediates\\bundles\\debug\\res\\drawable-xxhdpi-v4\\plugin_activity_loading.xml"
     }
 ]
