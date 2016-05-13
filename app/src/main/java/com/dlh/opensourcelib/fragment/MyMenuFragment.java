@@ -8,10 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 import com.dlh.opensourcelib.R;
-import com.dlh.opensourcelib.activity.FavoritesActivity;
 import com.dlh.opensourcelib.utils.GlideCircleTransform;
 import com.mxn.soul.flowingdrawer_core.MenuFragment;
 
@@ -48,12 +46,11 @@ public class MyMenuFragment extends MenuFragment {
     private NavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.menu_favorites:
-                    FavoritesActivity.toFavoritesActivity(getActivity());
-                    break;
-            }
-            return true;
+//        switch (item.getItemId()){
+//            R.id.
+//        }
+
+            return false;
         }
     };
 

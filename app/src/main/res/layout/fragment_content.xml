@@ -1,29 +1,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.dlh.opensourcelib.fragment.ContentFragment">
-
-    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
-        android:id="@+id/swipeToLoadLayout"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.dlh.opensourcelib.fragment.ContentFragment">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_grid_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_e3e3e3"
-        app:swipe_style="classic">
-
-        <include
-            android:id="@id/swipe_refresh_header"
-            layout="@layout/layout_twitter_header" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@id/swipe_target"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false" />
-
-        <include
-            android:id="@id/swipe_load_more_footer"
-            layout="@layout/layout_classic_footer" />
-    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+        android:scrollbars="none" />
 </FrameLayout>
