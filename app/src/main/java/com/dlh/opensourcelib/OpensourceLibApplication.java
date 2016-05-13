@@ -1,6 +1,7 @@
 package com.dlh.opensourcelib;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.update.BmobUpdateAgent;
 
 import com.dlh.opensourcelib.constants.Constants;
 import com.dlh.opensourcelib.utils.NetWorkUtil;
@@ -24,6 +25,7 @@ public class OpensourceLibApplication extends PluginApplication {
         super.onCreate();
         application = this;
         Bmob.initialize(application, Constants.BMOB_APP_ID);
+        BmobUpdateAgent.initAppVersion(this);
         SQLiteDatabase.loadLibs(application);
         KLog.init(BuildConfig.LOG_DEBUG);
         if (NetWorkUtil.getNetType(application) == NetWorkUtil.NetType.NONET) {
@@ -31,6 +33,7 @@ public class OpensourceLibApplication extends PluginApplication {
         } else {
             isNetWork = NetWorkUtil.isNetWorkAvailable(application);
         }
+
         MobclickAgent.setDebugMode(true);
         // SDK在统计Fragment时，需要关闭Activity自带的页面统计，
         // 然后在每个页面中重新集成页面统计的代码(包括调用了 onResume 和 onPause 的Activity)。

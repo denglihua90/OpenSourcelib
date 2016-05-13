@@ -14,6 +14,8 @@ import com.mxn.soul.flowingdrawer_core.FlowingView;
 import com.mxn.soul.flowingdrawer_core.LeftDrawerLayout;
 import com.umeng.analytics.MobclickAgent;
 
+import cn.bmob.v3.update.BmobUpdateAgent;
+
 public class MainActivity extends AppCompatActivity {
     private LeftDrawerLayout mLeftDrawerLayout;
     private String Tag = MainActivity.class.getSimpleName();
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupToolbar();
+        BmobUpdateAgent.initAppVersion(this);
+        BmobUpdateAgent.setUpdateOnlyWifi(false);
         mLeftDrawerLayout = (LeftDrawerLayout) findViewById(R.id.id_drawerlayout);
         FragmentManager fm = getSupportFragmentManager();
         Fragment mMenuFragment = fm.findFragmentById(R.id.id_container_menu);

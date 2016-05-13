@@ -10,11 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.dlh.opensourcelib.OpensourceLibApplication;
 import com.dlh.opensourcelib.R;
 import com.dlh.opensourcelib.activity.FavoritesActivity;
 import com.dlh.opensourcelib.utils.GlideCircleTransform;
 import com.mxn.soul.flowingdrawer_core.MenuFragment;
 import com.umeng.analytics.MobclickAgent;
+
+import cn.bmob.v3.update.BmobUpdateAgent;
 
 
 public class MyMenuFragment extends MenuFragment {
@@ -64,6 +67,9 @@ public class MyMenuFragment extends MenuFragment {
             switch (item.getItemId()) {
                 case R.id.menu_favorites:
                     FavoritesActivity.toFavoritesActivity(getActivity());
+                    break;
+                case R.id.menu_update:
+                    BmobUpdateAgent.forceUpdate(OpensourceLibApplication.application);
                     break;
             }
             return true;
