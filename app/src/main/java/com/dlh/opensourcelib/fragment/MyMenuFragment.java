@@ -14,12 +14,14 @@ import com.dlh.opensourcelib.R;
 import com.dlh.opensourcelib.activity.FavoritesActivity;
 import com.dlh.opensourcelib.utils.GlideCircleTransform;
 import com.mxn.soul.flowingdrawer_core.MenuFragment;
+import com.umeng.analytics.MobclickAgent;
 
 
 public class MyMenuFragment extends MenuFragment {
 
     private ImageView ivMenuUserProfilePhoto;
     private NavigationView vNavigation;
+    private String Tag = MyMenuFragment.class.getSimpleName();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +45,17 @@ public class MyMenuFragment extends MenuFragment {
 //        String profilePhoto = getResources().getString(R.string.user_profile_photo);
         Glide.with(getActivity()).load(R.mipmap.logo_icon).placeholder(R.drawable.img_circle_placeholder).override(avatarSize, avatarSize).centerCrop().transform(new GlideCircleTransform(getActivity()))
                 .into(ivMenuUserProfilePhoto);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(Tag); //统计页面，"MainScreen"为页面名称，可自定义
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(Tag);
     }
 
     private NavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {

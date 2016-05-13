@@ -6,14 +6,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+
 import com.dlh.opensourcelib.R;
 import com.dlh.opensourcelib.fragment.ContentFragment;
 import com.dlh.opensourcelib.fragment.MyMenuFragment;
 import com.mxn.soul.flowingdrawer_core.FlowingView;
 import com.mxn.soul.flowingdrawer_core.LeftDrawerLayout;
+import com.umeng.analytics.MobclickAgent;
 
 public class MainActivity extends AppCompatActivity {
     private LeftDrawerLayout mLeftDrawerLayout;
+    private String Tag = MainActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(Tag);
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(Tag);
+        MobclickAgent.onPause(this);
+    }
 
     protected void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

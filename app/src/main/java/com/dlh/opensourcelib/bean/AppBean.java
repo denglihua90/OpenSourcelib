@@ -17,6 +17,8 @@ public class AppBean extends BmobObject {
     private String gitHub;
     private BmobFile thumbFile;
     private BmobFile plun;
+    private String thumbFileURL;
+    private String plunURL;
     private Integer type;
     private String packageInfo;
 
@@ -92,4 +94,19 @@ public class AppBean extends BmobObject {
         this.title = title;
     }
 
+    public String getThumbFileURL() {
+        return thumbFileURL;
+    }
+
+    public void setThumbFileURL(String thumbFileURL) {
+        this.thumbFileURL = thumbFileURL;
+    }
+
+    public String getPlunURL() {
+        return plunURL;
+    }
+
+    public void setPlunURL(String plunURL) {
+        this.plunURL = plunURL;
+    }
 }

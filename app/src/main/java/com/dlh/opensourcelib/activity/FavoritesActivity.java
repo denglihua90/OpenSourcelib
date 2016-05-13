@@ -22,6 +22,7 @@ import com.dlh.opensourcelib.constants.Constants;
 import com.dlh.opensourcelib.db.dao.FavoritesBeanDao;
 import com.pacific.adapter.RecyclerAdapter;
 import com.pacific.adapter.RecyclerAdapterHelper;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * @TODO:
@@ -67,6 +68,18 @@ public class FavoritesActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
     protected void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -79,9 +92,5 @@ public class FavoritesActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
 
 }

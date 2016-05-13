@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,18 +18,27 @@ import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.dlh.opensourcelib.OpensourceLibApplication;
 import com.dlh.opensourcelib.R;
 import com.dlh.opensourcelib.activity.DetailsInfoActivity;
 import com.dlh.opensourcelib.bean.AppBean;
+import com.dlh.opensourcelib.utils.NetWorkUtil;
 import com.pacific.adapter.RecyclerAdapter;
 import com.pacific.adapter.RecyclerAdapterHelper;
 import com.socks.library.KLog;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.listener.FindCallback;
 
 /**
@@ -46,11 +55,18 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
     // TODO: Rename and change types of parameters
 //    private String mParam1;
 //    private String mParam2;
+    private String Tag = ContentFragment.class.getSimpleName();
 
     private RecyclerView listGridView;
 
     private RecyclerAdapter recyclerAdapter;
     private SwipeToLoadLayout swipeToLoadLayout;
+    private int pageSize = 9;
+    private int curPage = 0;
+
+    private String lastTime = "";
+    private final static int REFRESH = 101;
+    private final static int LOAD_MORE = 102;
 
     /**
      * Use this factory method to create a new instance of
@@ -99,7 +115,7 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
             protected void convert(RecyclerAdapterHelper recyclerAdapterHelper, final AppBean appBean) {
                 recyclerAdapterHelper.setText(R.id.tv, appBean.getTitle());
                 ImageView iv = (ImageView) recyclerAdapterHelper.getItemView().findViewById(R.id.iv);
-                Glide.with(getActivity()).load(appBean.getThumbFile().getFileUrl(getActivity())).placeholder(R.drawable.plugin_activity_loading).error(R.drawable.img_circle_placeholder).diskCacheStrategy(DiskCacheStrategy.ALL).into(iv);
+                Glide.with(getActivity()).load(appBean.getThumbFileURL()).placeholder(R.drawable.plugin_activity_loading).error(R.drawable.img_circle_placeholder).diskCacheStrategy(DiskCacheStrategy.ALL).into(iv);
                 recyclerAdapterHelper.getItemView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -137,9 +153,15 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
         });
     }
 
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(Tag); //统计页面，"MainScreen"为页面名称，可自定义
+    }
+
     @Override
     public void onPause() {
         super.onPause();
+        MobclickAgent.onPageEnd(Tag);
         if (swipeToLoadLayout.isRefreshing()) {
             swipeToLoadLayout.setRefreshing(false);
         }
@@ -150,41 +172,118 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
 
     @Override
     public void onLoadMore() {
-        if (swipeToLoadLayout.isLoadingMore()) {
-            swipeToLoadLayout.setLoadingMore(false);
-
+//        if (swipeToLoadLayout.isLoadingMore()) {
+//            swipeToLoadLayout.setLoadingMore(false);
+//
+//        }
+        if (OpensourceLibApplication.isNetWork) {
+            queryData(curPage, LOAD_MORE);
         }
     }
 
     @Override
     public void onRefresh() {
-        queryData();
+        if (OpensourceLibApplication.isNetWork) {
+            queryData(0, REFRESH);
+        } else {
+
+        }
     }
 
     /**
      * 查询数据
      */
-    public void queryData() {
+    public void queryData(int page, final int type) {
         BmobQuery query = new BmobQuery(AppBean.table);
         query.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);
-        query.findObjects(getActivity(), new FindCallback() {
-            @Override
-            public void onSuccess(JSONArray arg0) {
-                //注意：查询的结果是JSONArray,需要自行解析
-//                showToast("查询成功:" + arg0.length());
-                KLog.i("dlh", "查询成功:" + arg0.toString());
-                List<AppBean> list = JSON.parseArray(arg0.toString(), AppBean.class);
-                recyclerAdapter.addAll(list);
-                swipeToLoadLayout.setRefreshing(false);
+        // 按时间降序查询
+        query.order("-createdAt");
+        // 如果是加载更多
+        if (type == LOAD_MORE) {
+            // 处理时间查询
+            Date date = null;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                if (!TextUtils.isEmpty(lastTime)) {
+                    date = sdf.parse(lastTime);
+                    // 只查询小于等于最后一个item发表时间的数据
+                    query.addWhereLessThanOrEqualTo("createdAt", new BmobDate(date));
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
 
-            @Override
-            public void onFailure(int arg0, String arg1) {
-//                showToast("查询失败:" + arg1);
-                KLog.i("dlh", "查询失败:" + arg1);
-                swipeToLoadLayout.setRefreshing(false);
+            // 跳过之前页数并去掉重复数据
+            if (page != 0) {
+                query.setSkip(pageSize * page);
             }
-        });
+        } else {
+            page = 0;
+            query.setSkip(page);
+        }
+        // 设置每页数据个数
+        query.setLimit(pageSize);
+        query.findObjects(getActivity(), new FindCallback() {
+                    @Override
+                    public void onSuccess(JSONArray arg0) {
+                        //注意：查询的结果是JSONArray,需要自行解析
+                        KLog.i("dlh", "查询成功:" + arg0.toString());
+                        if (arg0 != null) {
+                            List<AppBean> list = JSON.parseArray(arg0.toString(), AppBean.class);
+                            if (list != null && list.size() > 0) {
+                                List<AppBean> tempList = new ArrayList<AppBean>();
+                                for (AppBean appBean : list) {
+                                    String imageUrl = appBean.getThumbFile().getFileUrl(OpensourceLibApplication.application);
+                                    String plunUrl = appBean.getPlun().getFileUrl(OpensourceLibApplication.application);
+                                    appBean.setThumbFileURL(imageUrl);
+                                    appBean.setPlunURL(plunUrl);
+                                    tempList.add(appBean);
+                                }
+
+                                if (type == REFRESH) {
+                                    swipeToLoadLayout.setRefreshing(false);
+                                    curPage = 0;
+                                    recyclerAdapter.clear();
+                                    // 获取最后时间
+                                    lastTime = list.get(list.size() - 1).getCreatedAt();
+                                    recyclerAdapter.addAll(tempList);
+                                } else {
+                                    // 获取最后时间
+                                    lastTime = list.get(list.size() - 1).getCreatedAt();
+                                    recyclerAdapter.addAll(tempList);
+                                    swipeToLoadLayout.setLoadingMore(false);
+
+                                }
+                                curPage++;
+                            } else {
+                                if (type == REFRESH) {
+                                    swipeToLoadLayout.setRefreshing(false);
+                                } else {
+                                    swipeToLoadLayout.setLoadingMore(false);
+                                }
+                            }
+                        } else {
+                            if (type == REFRESH) {
+                                swipeToLoadLayout.setRefreshing(false);
+                            } else {
+                                swipeToLoadLayout.setLoadingMore(false);
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(int arg0, String arg1) {
+                        KLog.i("dlh", "查询失败:" + arg1);
+                        if (type == REFRESH) {
+                            swipeToLoadLayout.setRefreshing(false);
+                        } else {
+                            swipeToLoadLayout.setLoadingMore(false);
+                        }
+                    }
+                }
+
+        );
     }
 
 

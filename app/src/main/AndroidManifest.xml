@@ -20,6 +20,14 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="57358fd8e0f55aff9b00188d" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Umeng" />
+
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name">

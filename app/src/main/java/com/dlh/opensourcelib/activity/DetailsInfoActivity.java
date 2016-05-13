@@ -27,6 +27,7 @@ import com.dlh.opensourcelib.utils.FileUtils;
 import com.dlh.opensourcelib.view.CBProgressBar;
 import com.morgoo.droidplugin.pm.PluginManager;
 import com.socks.library.KLog;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 
@@ -83,6 +84,18 @@ public class DetailsInfoActivity extends AppCompatActivity {
         cbProgressBar.setVisibility(View.GONE);
         btn.setVisibility(View.VISIBLE);
         setView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     private void setView() {
