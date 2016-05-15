@@ -46,7 +46,7 @@ public class MyMenuFragment extends MenuFragment {
     private void setupHeader() {
         int avatarSize = getResources().getDimensionPixelSize(R.dimen.global_menu_avatar_size);
 //        String profilePhoto = getResources().getString(R.string.user_profile_photo);
-        Glide.with(getActivity()).load(R.mipmap.logo_icon).placeholder(R.drawable.img_circle_placeholder).override(avatarSize, avatarSize).centerCrop().transform(new GlideCircleTransform(getActivity()))
+        Glide.with(getActivity()).load(R.mipmap.ic_launcher).placeholder(R.drawable.img_circle_placeholder).override(avatarSize, avatarSize).centerCrop().transform(new GlideCircleTransform(getActivity()))
                 .into(ivMenuUserProfilePhoto);
     }
 
@@ -69,7 +69,7 @@ public class MyMenuFragment extends MenuFragment {
                     FavoritesActivity.toFavoritesActivity(getActivity());
                     break;
                 case R.id.menu_update:
-                    BmobUpdateAgent.forceUpdate(OpensourceLibApplication.application);
+                    BmobUpdateAgent.forceUpdate(getActivity());
                     break;
             }
             return true;

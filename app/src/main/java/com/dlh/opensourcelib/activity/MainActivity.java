@@ -25,8 +25,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupToolbar();
-        BmobUpdateAgent.initAppVersion(this);
+//        BmobUpdateAgent.initAppVersion(this);
         BmobUpdateAgent.setUpdateOnlyWifi(false);
+        BmobUpdateAgent.update(this);
         mLeftDrawerLayout = (LeftDrawerLayout) findViewById(R.id.id_drawerlayout);
         FragmentManager fm = getSupportFragmentManager();
         Fragment mMenuFragment = fm.findFragmentById(R.id.id_container_menu);

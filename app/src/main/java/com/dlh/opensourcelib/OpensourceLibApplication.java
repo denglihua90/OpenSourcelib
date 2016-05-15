@@ -1,8 +1,5 @@
 package com.dlh.opensourcelib;
 
-import cn.bmob.v3.Bmob;
-import cn.bmob.v3.update.BmobUpdateAgent;
-
 import com.dlh.opensourcelib.constants.Constants;
 import com.dlh.opensourcelib.utils.NetWorkUtil;
 import com.morgoo.droidplugin.PluginApplication;
@@ -10,6 +7,9 @@ import com.socks.library.KLog;
 import com.umeng.analytics.MobclickAgent;
 
 import net.sqlcipher.database.SQLiteDatabase;
+
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.update.BmobUpdateAgent;
 
 /**
  * @TODO:

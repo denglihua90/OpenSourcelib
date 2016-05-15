@@ -3,9 +3,15 @@ package com.morgoo.droidplugin.am;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+
 import com.morgoo.droidplugin.pm.PluginManager;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 正在运行的Activity列表

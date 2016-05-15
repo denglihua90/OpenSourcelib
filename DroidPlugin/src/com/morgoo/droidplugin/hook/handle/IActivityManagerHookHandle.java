@@ -40,10 +40,16 @@ import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.*;
+import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Looper;
+import android.os.RemoteException;
 import android.text.TextUtils;
+
 import com.morgoo.droidplugin.PluginManagerService;
 import com.morgoo.droidplugin.PluginPatchManager;
 import com.morgoo.droidplugin.am.RunningActivities;

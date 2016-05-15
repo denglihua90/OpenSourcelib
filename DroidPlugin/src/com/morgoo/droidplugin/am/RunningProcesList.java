@@ -23,14 +23,28 @@
 package com.morgoo.droidplugin.am;
 
 import android.content.Context;
-import android.content.pm.*;
+import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.ComponentInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ProviderInfo;
+import android.content.pm.ServiceInfo;
 import android.os.RemoteException;
 import android.text.TextUtils;
+
 import com.morgoo.droidplugin.pm.PluginManager;
 import com.morgoo.helper.Log;
 
 import java.text.Collator;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * 正在运行的进程列表

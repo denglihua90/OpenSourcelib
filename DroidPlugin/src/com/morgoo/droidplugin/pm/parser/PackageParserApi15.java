@@ -23,7 +23,15 @@
 package com.morgoo.droidplugin.pm.parser;
 
 import android.content.Context;
-import android.content.pm.*;
+import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.InstrumentationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PermissionGroupInfo;
+import android.content.pm.PermissionInfo;
+import android.content.pm.ProviderInfo;
+import android.content.pm.ServiceInfo;
+
 import com.morgoo.droidplugin.reflect.MethodUtils;
 
 import java.lang.reflect.Method;

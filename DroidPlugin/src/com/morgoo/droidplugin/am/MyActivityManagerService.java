@@ -31,6 +31,7 @@ import android.content.pm.ProviderInfo;
 import android.content.pm.ServiceInfo;
 import android.os.RemoteException;
 import android.text.TextUtils;
+
 import com.morgoo.droidplugin.pm.IApplicationCallback;
 import com.morgoo.droidplugin.pm.IPluginManagerImpl;
 import com.morgoo.droidplugin.reflect.FieldUtils;

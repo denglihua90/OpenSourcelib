@@ -26,8 +26,25 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
-import com.morgoo.droidplugin.hook.binder.*;
-import com.morgoo.droidplugin.hook.proxy.*;
+
+import com.morgoo.droidplugin.hook.binder.IAudioServiceBinderHook;
+import com.morgoo.droidplugin.hook.binder.IClipboardBinderHook;
+import com.morgoo.droidplugin.hook.binder.IContentServiceBinderHook;
+import com.morgoo.droidplugin.hook.binder.IGraphicsStatsBinderHook;
+import com.morgoo.droidplugin.hook.binder.IInputMethodManagerBinderHook;
+import com.morgoo.droidplugin.hook.binder.ILocationManagerBinderHook;
+import com.morgoo.droidplugin.hook.binder.IMediaRouterServiceBinderHook;
+import com.morgoo.droidplugin.hook.binder.IMountServiceBinderHook;
+import com.morgoo.droidplugin.hook.binder.INotificationManagerBinderHook;
+import com.morgoo.droidplugin.hook.binder.ISearchManagerBinderHook;
+import com.morgoo.droidplugin.hook.binder.ISessionManagerBinderHook;
+import com.morgoo.droidplugin.hook.binder.IWifiManagerBinderHook;
+import com.morgoo.droidplugin.hook.binder.IWindowManagerBinderHook;
+import com.morgoo.droidplugin.hook.proxy.IActivityManagerHook;
+import com.morgoo.droidplugin.hook.proxy.IPackageManagerHook;
+import com.morgoo.droidplugin.hook.proxy.InstrumentationHook;
+import com.morgoo.droidplugin.hook.proxy.LibCoreHook;
+import com.morgoo.droidplugin.hook.proxy.PluginCallbackHook;
 import com.morgoo.droidplugin.hook.xhook.SQLiteDatabaseHook;
 import com.morgoo.helper.Log;
 

@@ -2,7 +2,6 @@ package com.dlh.opensourcelib.db;
 
 import android.content.Context;
 
-import com.dlh.opensourcelib.bean.AppBean;
 import com.dlh.opensourcelib.bean.FavoritesBean;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;

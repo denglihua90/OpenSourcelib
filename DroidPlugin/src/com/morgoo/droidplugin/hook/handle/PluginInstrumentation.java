@@ -38,6 +38,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.text.TextUtils;
+
 import com.morgoo.droidplugin.am.RunningActivities;
 import com.morgoo.droidplugin.core.Env;
 import com.morgoo.droidplugin.core.PluginProcessManager;
