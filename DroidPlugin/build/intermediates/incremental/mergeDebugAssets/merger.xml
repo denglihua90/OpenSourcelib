@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/dlh/Desktop/AndroidStudioProjects/OpenSourcelib/DroidPlugin/assets"/></dataSet><dataSet config="debug"><source path="/Users/dlh/Desktop/AndroidStudioProjects/OpenSourcelib/DroidPlugin/build-types/debug/assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="D:\GitHub\OpenSourcelib\DroidPlugin\assets"/></dataSet><dataSet config="debug"><source path="D:\GitHub\OpenSourcelib\DroidPlugin\build-types\debug\assets"/></dataSet></merger>

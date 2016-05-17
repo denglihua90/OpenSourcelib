@@ -13,7 +13,7 @@
             android:icon="@drawable/ic_global_menu_direct"
             android:title="版本更新" />
         <item
-            android:id="@+id/menu_popular"
+            android:id="@+id/menu_about"
             android:icon="@drawable/ic_global_menu_popular"
             android:title="关于我们" />
     </group>

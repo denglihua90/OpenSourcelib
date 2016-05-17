@@ -1,11 +1,8 @@
 <resources>
-    <string name="app_name">OpenSourcelib</string>
-
+    <string name="app_name">androidLearn</string>
     <string name="detailsinfo">APP详情</string>
-
-
+    <string name="about">关于</string>
     <string name="action_settings">Settings</string>
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="user_profile_photo">https://avatars1.githubusercontent.com/u/6947495?v=3&amp;s=460</string>
@@ -23,4 +20,6 @@
     <string name="release_to_load_more">释放立即加载</string>
     <string name="swipe_to_load_more">上拉加载更多</string>
     <string name="loading_more">加载成功</string>
+    <string name="about_content">本软件主要是收集网络上的开源项目;开源项目不定期更新;注：本软件所有内容都来自于网络</string>
+
 </resources>

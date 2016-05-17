@@ -49,6 +49,9 @@
             android:name=".activity.FavoritesActivity"
             android:label="@string/detailsinfo" />
         <activity
+            android:name=".activity.AboutActivity"
+            android:label="@string/about" />
+        <activity
             android:name="cn.bmob.v3.update.UpdateDialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
     </application>

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.dlh.opensourcelib.OpensourceLibApplication;
 import com.dlh.opensourcelib.R;
+import com.dlh.opensourcelib.activity.AboutActivity;
 import com.dlh.opensourcelib.activity.FavoritesActivity;
 import com.dlh.opensourcelib.utils.GlideCircleTransform;
 import com.mxn.soul.flowingdrawer_core.MenuFragment;
@@ -70,6 +71,9 @@ public class MyMenuFragment extends MenuFragment {
                     break;
                 case R.id.menu_update:
                     BmobUpdateAgent.forceUpdate(getActivity());
+                    break;
+                case R.id.menu_about:
+                    AboutActivity.toAboutActivity(getActivity());
                     break;
             }
             return true;

@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: /Users/dlh/Desktop/AndroidStudioProjects/OpenSourcelib/DroidPlugin/src/com/morgoo/droidplugin/pm/IPluginManager.aidl
+ * Original file: D:\\GitHub\\OpenSourcelib\\DroidPlugin\\src\\com\\morgoo\\droidplugin\\pm\\IPluginManager.aidl
  */
 package com.morgoo.droidplugin.pm;
 /**
