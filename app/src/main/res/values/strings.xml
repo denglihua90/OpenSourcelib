@@ -13,6 +13,8 @@
 
     <string name="favor">收藏</string>
     <string name="share">分享</string>
+    <string name="app_share">应用分享</string>
+    <string name="app_star">给我点赞</string>
     <string name="refreshing">正在刷新</string>
     <string name="release_to_refresh">释放立即刷新</string>
     <string name="swipe_to_refresh">下拉可以刷新</string>
@@ -21,5 +23,11 @@
     <string name="swipe_to_load_more">上拉加载更多</string>
     <string name="loading_more">加载成功</string>
     <string name="about_content">本软件主要是收集网络上的开源项目;开源项目不定期更新;注：本软件所有内容都来自于网络</string>
-
+    <string name="errcode_success">发送成功</string>
+    <string name="errcode_cancel">发送取消</string>
+    <string name="errcode_deny">发送被拒绝</string>
+    <string name="errcode_unknown">发送返回</string>
+    <string name="app_back">返回</string>
+    <string name="app_ok">确定</string>
+    <string name="app_cancel">取消</string>
 </resources>

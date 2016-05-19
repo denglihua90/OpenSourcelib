@@ -1,5 +1,8 @@
 package com.dlh.opensourcelib.fragment;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -15,6 +18,7 @@ import com.dlh.opensourcelib.R;
 import com.dlh.opensourcelib.activity.AboutActivity;
 import com.dlh.opensourcelib.activity.FavoritesActivity;
 import com.dlh.opensourcelib.utils.GlideCircleTransform;
+import com.dlh.opensourcelib.view.MMAlert;
 import com.mxn.soul.flowingdrawer_core.MenuFragment;
 import com.umeng.analytics.MobclickAgent;
 
@@ -74,6 +78,21 @@ public class MyMenuFragment extends MenuFragment {
                     break;
                 case R.id.menu_about:
                     AboutActivity.toAboutActivity(getActivity());
+
+                    break;
+                case R.id.menu_share:
+                    MMAlert.showAlert(getActivity(), getActivity().getString(R.string.share), getActivity().getResources().getStringArray(R.array.sharearray), null, new MMAlert.OnAlertSelectId() {
+                        @Override
+                        public void onClick(int whichButton) {
+
+                        }
+                    });
+                    break;
+                case R.id.menu_app_star:
+                    Uri uri = Uri.parse("market://details?id=" + OpensourceLibApplication.application.getPackageName());
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                     break;
             }
             return true;

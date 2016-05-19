@@ -16,4 +16,10 @@
         <item>24,7,12,0,</item>
         <item>0,7,12,0,</item>
     </string-array>
+    <string-array name="sharearray">
+        <item>QQ分享 </item>
+        <item>QQ空间分享</item>
+        <item>微信好友分享</item>
+        <item>微信朋友圈分享</item>
+    </string-array>
 </resources>
