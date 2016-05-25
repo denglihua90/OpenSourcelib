@@ -13,7 +13,7 @@ public class Constants {
 
 
     // APP_ID 替换为你的应用从官方网站申请到的合法appId
-    public static final String WENXIN_APP_ID = "wx1a43d1ccd8f49a06";
+    public static final String WENXIN_APP_ID = "wx1a43d1ccd8f49a06";//AppID：wx1a43d1ccd8f49a06
     public static final String WENXIN_APP_SECRET = "17ad579308bd7bc09a4c622ffe0bfbe3";
 
     public static class ShowMsgActivity {

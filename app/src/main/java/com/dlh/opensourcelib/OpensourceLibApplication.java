@@ -25,7 +25,7 @@ public class OpensourceLibApplication extends PluginApplication {
         super.onCreate();
         application = this;
         Bmob.initialize(application, Constants.BMOB_APP_ID);
-        BmobUpdateAgent.initAppVersion(this);
+//        BmobUpdateAgent.initAppVersion(this);
         SQLiteDatabase.loadLibs(application);
         KLog.init(BuildConfig.LOG_DEBUG);
         if (NetWorkUtil.getNetType(application) == NetWorkUtil.NetType.NONET) {

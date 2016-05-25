@@ -3,6 +3,7 @@ package com.dlh.opensourcelib.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +25,9 @@ import com.dlh.opensourcelib.bean.FavoritesBean;
 import com.dlh.opensourcelib.constants.Constants;
 import com.dlh.opensourcelib.db.dao.FavoritesBeanDao;
 import com.dlh.opensourcelib.utils.FileUtils;
+import com.dlh.opensourcelib.utils.ShareQQorWeixinUtils;
 import com.dlh.opensourcelib.view.CBProgressBar;
+import com.dlh.opensourcelib.view.MMAlert;
 import com.morgoo.droidplugin.pm.PluginManager;
 import com.socks.library.KLog;
 import com.umeng.analytics.MobclickAgent;
@@ -49,6 +52,8 @@ public class DetailsInfoActivity extends AppCompatActivity {
     private TextView desc;
     private CBProgressBar cbProgressBar;
 
+    private ShareQQorWeixinUtils shareQQorWeixinUtils = null;
+
     public static void toDetailsInfoActivity(Context context, AppBean appBean) {
         Intent intent = new Intent(context, DetailsInfoActivity.class);
         intent.putExtra(Constants.APP_BEAN_KEY, appBean);
@@ -70,6 +75,7 @@ public class DetailsInfoActivity extends AppCompatActivity {
         favoritesBean = (FavoritesBean) getIntent().getSerializableExtra(Constants.FAVORITES_BEAN_KEY);
         btn = (Button) findViewById(R.id.btn);
         share_btn = (Button) findViewById(R.id.share_btn);
+        share_btn.setOnClickListener(onClickListener);
         favor_btn = (Button) findViewById(R.id.favor_btn);
         favor_btn.setOnClickListener(onClickListener);
         titleLayout = (LinearLayout) findViewById(R.id.title_layout);
@@ -83,6 +89,7 @@ public class DetailsInfoActivity extends AppCompatActivity {
         cbProgressBar = (CBProgressBar) findViewById(R.id.my_progress);
         cbProgressBar.setVisibility(View.GONE);
         btn.setVisibility(View.VISIBLE);
+        shareQQorWeixinUtils = new ShareQQorWeixinUtils(this);
         setView();
     }
 
@@ -216,7 +223,9 @@ public class DetailsInfoActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.github_layout:
-
+                    Uri uri = Uri.parse(github.getText().toString());
+                    Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(it);
 
                     break;
                 case R.id.favor_btn:
@@ -248,6 +257,29 @@ public class DetailsInfoActivity extends AppCompatActivity {
                         FavoritesBeanDao.getDao().deleteByID(favoritesBean.getProID());
                         favor_btn.setSelected(false);
                     }
+                    break;
+
+                case R.id.share_btn:
+                    MMAlert.showAlert(DetailsInfoActivity.this, DetailsInfoActivity.this.getString(R.string.share_URL), DetailsInfoActivity.this.getResources().getStringArray(R.array.sharearray2), null, new MMAlert.OnAlertSelectId() {
+                        @Override
+                        public void onClick(int whichButton) {
+                            KLog.i("dlh", "whichButton---->" + whichButton);
+                            switch (whichButton) {
+                                case 0:
+                                    if (shareQQorWeixinUtils != null) {
+                                        shareQQorWeixinUtils.shareTextToQQ(github.getText().toString());
+                                    }
+                                    break;
+                                case 1:
+                                    if (shareQQorWeixinUtils != null) {
+                                        shareQQorWeixinUtils.shareTextToWeixin(github.getText().toString());
+                                    }
+                                    break;
+                            }
+
+
+                        }
+                    });
                     break;
 
             }

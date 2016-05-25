@@ -18,8 +18,10 @@ import com.dlh.opensourcelib.R;
 import com.dlh.opensourcelib.activity.AboutActivity;
 import com.dlh.opensourcelib.activity.FavoritesActivity;
 import com.dlh.opensourcelib.utils.GlideCircleTransform;
+import com.dlh.opensourcelib.utils.ShareQQorWeixinUtils;
 import com.dlh.opensourcelib.view.MMAlert;
 import com.mxn.soul.flowingdrawer_core.MenuFragment;
+import com.socks.library.KLog;
 import com.umeng.analytics.MobclickAgent;
 
 import cn.bmob.v3.update.BmobUpdateAgent;
@@ -31,9 +33,12 @@ public class MyMenuFragment extends MenuFragment {
     private NavigationView vNavigation;
     private String Tag = MyMenuFragment.class.getSimpleName();
 
+    private ShareQQorWeixinUtils shareQQorWeixinUtils = null;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        shareQQorWeixinUtils = new ShareQQorWeixinUtils(getActivity());
     }
 
 
@@ -84,6 +89,32 @@ public class MyMenuFragment extends MenuFragment {
                     MMAlert.showAlert(getActivity(), getActivity().getString(R.string.share), getActivity().getResources().getStringArray(R.array.sharearray), null, new MMAlert.OnAlertSelectId() {
                         @Override
                         public void onClick(int whichButton) {
+                            KLog.i("dlh", "whichButton---->" + whichButton);
+                            switch (whichButton) {
+                                case 0:
+                                    if (shareQQorWeixinUtils != null) {
+                                        shareQQorWeixinUtils.shareAppToQQ();
+                                    }
+                                    break;
+                                case 1:
+                                    if (shareQQorWeixinUtils != null) {
+                                        shareQQorWeixinUtils.shareAppToQZone();
+                                    }
+                                    break;
+                                case 2:
+                                    if (shareQQorWeixinUtils != null) {
+                                        shareQQorWeixinUtils.shareAppToWeixin(true);
+                                    }
+                                    break;
+                                case 3:
+                                    if (shareQQorWeixinUtils != null) {
+                                        shareQQorWeixinUtils.shareAppToWeixin(false);
+                                    }
+                                    break;
+
+
+                            }
+
 
                         }
                     });

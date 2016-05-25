@@ -2,7 +2,16 @@
     <string name="app_name">androidLearn</string>
     <string name="detailsinfo">APP详情</string>
     <string name="about">关于</string>
+    <string name="topi">温馨提示:点击可以直接加群</string>
+    <string name="shengming">声明：内容来源于网络，如果版权问题联系我们</string>
+    <string name="androidLearn">androidLearn(官方):454042538</string>
+    <string name="androidLearn_key">mho283hv9w_6RVaQwS8tOWYA3ORfV2U-</string>
+    <string name="android_news1">android新手①(学习):474900184</string>
+    <string name="android_news1_key">u_7RIf3m7b6vbJyaDIx2iUODrNgxbloF</string>
+    <string name="android_news3">android新手③(学习):294927468</string>
+    <string name="android_news3_key">F9_Xo0k9vZLG94A2Us3zT9IHIbKNGF9F</string>
     <string name="action_settings">Settings</string>
+    <string name="app_summary">androidLearn是收集网络上实用优秀的android开源项目、开源库;</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="user_profile_photo">https://avatars1.githubusercontent.com/u/6947495?v=3&amp;s=460</string>
@@ -10,9 +19,9 @@
     <string name="info_github">地址:</string>
     <string name="info_desc">描述:</string>
     <string name="info_yunxing">运行</string>
-
     <string name="favor">收藏</string>
     <string name="share">分享</string>
+    <string name="share_URL">分享地址到</string>
     <string name="app_share">应用分享</string>
     <string name="app_star">给我点赞</string>
     <string name="refreshing">正在刷新</string>
@@ -22,7 +31,7 @@
     <string name="release_to_load_more">释放立即加载</string>
     <string name="swipe_to_load_more">上拉加载更多</string>
     <string name="loading_more">加载成功</string>
-    <string name="about_content">本软件主要是收集网络上的开源项目;开源项目不定期更新;注：本软件所有内容都来自于网络</string>
+    <string name="about_content">androidLearn是收集网络上实用优秀的android开源项目、开源库;如果你有好的开源项目、开发库推荐可以加入开发群一起交流学习</string>
     <string name="errcode_success">发送成功</string>
     <string name="errcode_cancel">发送取消</string>
     <string name="errcode_deny">发送被拒绝</string>

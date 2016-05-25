@@ -1,6 +1,9 @@
 package com.dlh.opensourcelib.bean;
 
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
 
@@ -9,17 +12,26 @@ import cn.bmob.v3.datatype.BmobFile;
  * @AUTHOR: dlh
  * @DATE: 2016/4/16
  */
+@DatabaseTable(tableName = "AppBean")
 public class AppBean extends BmobObject {
     public static final String table = "Pro_table";
+    @DatabaseField(columnName = "proID", id = true)
     private Integer proID;
+    @DatabaseField(columnName = "title")
     private String title;
+    @DatabaseField(columnName = "desc")
     private String desc;
+    @DatabaseField(columnName = "gitHub")
     private String gitHub;
     private BmobFile thumbFile;
     private BmobFile plun;
+    @DatabaseField(columnName = "thumbFileURL")
     private String thumbFileURL;
+    @DatabaseField(columnName = "plunURL")
     private String plunURL;
+    @DatabaseField(columnName = "type")
     private Integer type;
+    @DatabaseField(columnName = "packageInfo")
     private String packageInfo;
 
     public BmobFile getPlun() {
