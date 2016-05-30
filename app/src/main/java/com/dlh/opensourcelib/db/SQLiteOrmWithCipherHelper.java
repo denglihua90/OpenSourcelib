@@ -2,6 +2,7 @@ package com.dlh.opensourcelib.db;
 
 import android.content.Context;
 
+import com.dlh.opensourcelib.bean.AppBean;
 import com.dlh.opensourcelib.bean.FavoritesBean;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
 public class SQLiteOrmWithCipherHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "database.db";
     public static final String DATABASE_PASSWORD = "changeIT";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 1;
     public static SQLiteOrmWithCipherHelper helper = null;
 
     public static SQLiteOrmWithCipherHelper getHelper(Context context) {
@@ -39,6 +40,7 @@ public class SQLiteOrmWithCipherHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase database, ConnectionSource source, int oldVersion, int newVersion) {
         dropTables(source);
         createTables(source);
+
     }
 
     @Override
@@ -49,6 +51,7 @@ public class SQLiteOrmWithCipherHelper extends OrmLiteSqliteOpenHelper {
     private void createTables(ConnectionSource source) {
         try {
             TableUtils.createTable(source, FavoritesBean.class);
+            TableUtils.createTable(source, AppBean.class);
         } catch (SQLException e) {
         }
     }
@@ -56,6 +59,7 @@ public class SQLiteOrmWithCipherHelper extends OrmLiteSqliteOpenHelper {
     private void dropTables(ConnectionSource source) {
         try {
             TableUtils.dropTable(source, FavoritesBean.class, true);
+            TableUtils.dropTable(source, AppBean.class, true);
         } catch (SQLException e) {
         }
     }

@@ -41,6 +41,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:textColor="?attr/colorPrimary" />
+            android:textColor="@color/dlh_white" />
     </RelativeLayout>
 </com.dlh.opensourcelib.view.TwitterRefreshHeaderView>

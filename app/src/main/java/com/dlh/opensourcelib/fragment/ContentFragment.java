@@ -22,6 +22,7 @@ import com.dlh.opensourcelib.OpensourceLibApplication;
 import com.dlh.opensourcelib.R;
 import com.dlh.opensourcelib.activity.DetailsInfoActivity;
 import com.dlh.opensourcelib.bean.AppBean;
+import com.dlh.opensourcelib.db.dao.AppBeanDao;
 import com.dlh.opensourcelib.utils.NetWorkUtil;
 import com.pacific.adapter.RecyclerAdapter;
 import com.pacific.adapter.RecyclerAdapterHelper;
@@ -172,12 +173,12 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
 
     @Override
     public void onLoadMore() {
-//        if (swipeToLoadLayout.isLoadingMore()) {
-//            swipeToLoadLayout.setLoadingMore(false);
-//
-//        }
         if (OpensourceLibApplication.isNetWork) {
             queryData(curPage, LOAD_MORE);
+        } else {
+            if (swipeToLoadLayout.isLoadingMore()) {
+                swipeToLoadLayout.setLoadingMore(false);
+            }
         }
     }
 
@@ -186,7 +187,15 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
         if (OpensourceLibApplication.isNetWork) {
             queryData(0, REFRESH);
         } else {
+            if (recyclerAdapter.getSize() > 0) {
+                recyclerAdapter.clear();
+            }
+            List<AppBean> list = AppBeanDao.getDao().queryAll();
+            recyclerAdapter.addAll(list);
+            if (swipeToLoadLayout.isRefreshing()) {
+                swipeToLoadLayout.setRefreshing(false);
 
+            }
         }
     }
 
@@ -252,6 +261,12 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
                                     lastTime = list.get(list.size() - 1).getCreatedAt();
                                     recyclerAdapter.addAll(tempList);
                                     swipeToLoadLayout.setLoadingMore(false);
+
+                                }
+                                if (tempList.size() > 0) {
+                                    for (AppBean appBean : tempList) {
+                                        AppBeanDao.getDao().save(appBean);
+                                    }
 
                                 }
                                 curPage++;

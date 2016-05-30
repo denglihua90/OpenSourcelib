@@ -6,11 +6,11 @@
             android:title="本地收藏" />
         <item
             android:id="@+id/menu_share"
-            android:icon="@drawable/ic_global_menu_direct"
+            android:icon="@drawable/ic_global_menu_likes"
             android:title="应用分享" />
         <item
             android:id="@+id/menu_app_star"
-            android:icon="@drawable/ic_global_menu_direct"
+            android:icon="@drawable/ic_heart_outline_grey"
             android:title="@string/app_star" />
         <item
             android:id="@+id/menu_update"

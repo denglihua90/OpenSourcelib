@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.DownloadFileListener;
@@ -150,74 +151,84 @@ public class DetailsInfoActivity extends AppCompatActivity {
                         if (FileUtils.fileIsExists(filePath)) {
                             startPlunActivity(filePath, appBean.getPackageInfo());
                         } else {
-                            //允许设置下载文件的存储路径，默认下载文件的目录为：context.getApplicationContext().getCacheDir()+"/bmob/"
+
+                            if (OpensourceLibApplication.isNetWork) {
+                                //允许设置下载文件的存储路径，默认下载文件的目录为：context.getApplicationContext().getCacheDir()+"/bmob/"
 //                        File saveFile = new File(Environment.getExternalStorageDirectory(), bmobFile.getFilename());
-                            cbProgressBar.setVisibility(View.VISIBLE);
-                            if (btn.getVisibility() == View.VISIBLE)
-                                btn.setVisibility(View.GONE);
-                            File saveFile = new File(OpensourceLibApplication.application.getCacheDir() + "/apk/", appBean.getTitle() + ".apk");
-                            BmobFile bmobFile = appBean.getPlun();
-                            bmobFile.download(DetailsInfoActivity.this, saveFile, new DownloadFileListener() {
-                                @Override
-                                public void onProgress(Integer progress, long total) {
-                                    cbProgressBar.updateProgress(progress);
-                                    super.onProgress(progress, total);
-                                }
+                                cbProgressBar.setVisibility(View.VISIBLE);
+                                if (btn.getVisibility() == View.VISIBLE)
+                                    btn.setVisibility(View.GONE);
+                                File saveFile = new File(OpensourceLibApplication.application.getCacheDir() + "/apk/", appBean.getTitle() + ".apk");
+                                BmobFile bmobFile = appBean.getPlun();
+                                bmobFile.download(DetailsInfoActivity.this, saveFile, new DownloadFileListener() {
+                                    @Override
+                                    public void onProgress(Integer progress, long total) {
+                                        cbProgressBar.updateProgress(progress);
+                                        super.onProgress(progress, total);
+                                    }
 
-                                @Override
-                                public void onSuccess(String s) {
-                                    KLog.i("dlh", s);
-                                    startPlunActivity(s, appBean.getPackageInfo());
-                                    cbProgressBar.setVisibility(View.GONE);
-                                    if (btn.getVisibility() == View.GONE)
-                                        btn.setVisibility(View.VISIBLE);
-                                }
+                                    @Override
+                                    public void onSuccess(String s) {
+                                        KLog.i("dlh", s);
+                                        startPlunActivity(s, appBean.getPackageInfo());
+                                        cbProgressBar.setVisibility(View.GONE);
+                                        if (btn.getVisibility() == View.GONE)
+                                            btn.setVisibility(View.VISIBLE);
+                                    }
 
-                                @Override
-                                public void onFailure(int i, String s) {
-                                    KLog.i("dlh", s);
-                                    cbProgressBar.setVisibility(View.GONE);
-                                    if (btn.getVisibility() == View.GONE)
-                                        btn.setVisibility(View.VISIBLE);
-                                }
+                                    @Override
+                                    public void onFailure(int i, String s) {
+                                        KLog.i("dlh", s);
+                                        cbProgressBar.setVisibility(View.GONE);
+                                        if (btn.getVisibility() == View.GONE)
+                                            btn.setVisibility(View.VISIBLE);
+                                    }
 
-                            });
+                                });
+                            } else {
+                                Toast.makeText(DetailsInfoActivity.this, DetailsInfoActivity.this.getResources().getString(R.string.net_hint), Toast.LENGTH_SHORT).show();
+                            }
+
                         }
                     } else if (favoritesBean != null) {
                         String filePath = DetailsInfoActivity.this.getApplicationContext().getCacheDir() + "/apk/" + favoritesBean.getTitle() + ".apk";
                         if (FileUtils.fileIsExists(filePath)) {
                             startPlunActivity(filePath, favoritesBean.getPackageInfo());
                         } else {
-                            File saveFile = new File(OpensourceLibApplication.application.getCacheDir() + "/apk/", favoritesBean.getTitle() + ".apk");
-                            cbProgressBar.setVisibility(View.VISIBLE);
-                            if (btn.getVisibility() == View.VISIBLE)
-                                btn.setVisibility(View.GONE);
-                            BmobFile bmobfile = new BmobFile(favoritesBean.getTitle(), "", favoritesBean.getPlunURL());
-                            bmobfile.download(DetailsInfoActivity.this, saveFile, new DownloadFileListener() {
-                                @Override
-                                public void onProgress(Integer progress, long total) {
-                                    cbProgressBar.updateProgress(progress);
-                                    super.onProgress(progress, total);
-                                }
+                            if (OpensourceLibApplication.isNetWork) {
+                                File saveFile = new File(OpensourceLibApplication.application.getCacheDir() + "/apk/", favoritesBean.getTitle() + ".apk");
+                                cbProgressBar.setVisibility(View.VISIBLE);
+                                if (btn.getVisibility() == View.VISIBLE)
+                                    btn.setVisibility(View.GONE);
+                                BmobFile bmobfile = new BmobFile(favoritesBean.getTitle(), "", favoritesBean.getPlunURL());
+                                bmobfile.download(DetailsInfoActivity.this, saveFile, new DownloadFileListener() {
+                                    @Override
+                                    public void onProgress(Integer progress, long total) {
+                                        cbProgressBar.updateProgress(progress);
+                                        super.onProgress(progress, total);
+                                    }
 
-                                @Override
-                                public void onSuccess(String s) {
-                                    KLog.i("dlh", s);
-                                    startPlunActivity(s, favoritesBean.getPackageInfo());
-                                    cbProgressBar.setVisibility(View.GONE);
-                                    if (btn.getVisibility() == View.GONE)
-                                        btn.setVisibility(View.VISIBLE);
-                                }
+                                    @Override
+                                    public void onSuccess(String s) {
+                                        KLog.i("dlh", s);
+                                        startPlunActivity(s, favoritesBean.getPackageInfo());
+                                        cbProgressBar.setVisibility(View.GONE);
+                                        if (btn.getVisibility() == View.GONE)
+                                            btn.setVisibility(View.VISIBLE);
+                                    }
 
-                                @Override
-                                public void onFailure(int i, String s) {
-                                    KLog.i("dlh", s);
-                                    cbProgressBar.setVisibility(View.GONE);
-                                    if (btn.getVisibility() == View.GONE)
-                                        btn.setVisibility(View.VISIBLE);
-                                }
+                                    @Override
+                                    public void onFailure(int i, String s) {
+                                        KLog.i("dlh", s);
+                                        cbProgressBar.setVisibility(View.GONE);
+                                        if (btn.getVisibility() == View.GONE)
+                                            btn.setVisibility(View.VISIBLE);
+                                    }
 
-                            });
+                                });
+                            } else {
+                                Toast.makeText(DetailsInfoActivity.this, DetailsInfoActivity.this.getResources().getString(R.string.net_hint), Toast.LENGTH_SHORT).show();
+                            }
                         }
 
                     }
@@ -243,8 +254,13 @@ public class DetailsInfoActivity extends AppCompatActivity {
                             favoritesBean.setPackageInfo(appBean.getPackageInfo());
                             favoritesBean.setTitle(appBean.getTitle());
                             favoritesBean.setType(appBean.getType());
-                            favoritesBean.setPlunURL(appBean.getPlun().getFileUrl(OpensourceLibApplication.application));
-                            favoritesBean.setThumbFileURL(appBean.getThumbFile().getFileUrl(OpensourceLibApplication.application));
+                            if (OpensourceLibApplication.isNetWork) {
+                                favoritesBean.setPlunURL(appBean.getPlun().getFileUrl(OpensourceLibApplication.application));
+                                favoritesBean.setThumbFileURL(appBean.getThumbFile().getFileUrl(OpensourceLibApplication.application));
+                            } else {
+                                favoritesBean.setPlunURL(appBean.getPlunURL());
+                                favoritesBean.setThumbFileURL(appBean.getThumbFileURL());
+                            }
                             FavoritesBeanDao.getDao().save(favoritesBean);
 //                        List<FavoritesBean> list = FavoritesBeanDao.getDao().queryAll();
 //                        for (int i = 0; i < list.size(); i++) {

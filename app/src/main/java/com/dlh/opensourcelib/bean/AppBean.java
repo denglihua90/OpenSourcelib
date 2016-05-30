@@ -12,7 +12,7 @@ import cn.bmob.v3.datatype.BmobFile;
  * @AUTHOR: dlh
  * @DATE: 2016/4/16
  */
-@DatabaseTable(tableName = "AppBean")
+@DatabaseTable(tableName = AppBean.table)
 public class AppBean extends BmobObject {
     public static final String table = "Pro_table";
     @DatabaseField(columnName = "proID", id = true)
