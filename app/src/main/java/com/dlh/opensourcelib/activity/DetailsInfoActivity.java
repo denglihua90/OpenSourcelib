@@ -1,23 +1,26 @@
 package com.dlh.opensourcelib.activity;
 
+import android.Manifest;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.RemoteException;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.listener.DownloadFileListener;
 
 import com.dlh.opensourcelib.OpensourceLibApplication;
 import com.dlh.opensourcelib.R;
@@ -35,12 +38,15 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.listener.DownloadFileListener;
+
 /**
  * @TODO:APP详情
  * @AUTHOR: dlh
  * @DATE: 2016/4/18
  */
-public class DetailsInfoActivity extends AppCompatActivity {
+public class DetailsInfoActivity extends AppCompatActivity implements ServiceConnection {
 
     private android.widget.Button btn, share_btn, favor_btn;
     private AppBean appBean;
@@ -92,6 +98,14 @@ public class DetailsInfoActivity extends AppCompatActivity {
         btn.setVisibility(View.VISIBLE);
         shareQQorWeixinUtils = new ShareQQorWeixinUtils(this);
         setView();
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 
     @Override
@@ -317,22 +331,77 @@ public class DetailsInfoActivity extends AppCompatActivity {
     }
 
     public void startPlunActivity(String filepath, String packageInfo) {
-
-        try {
-            int i = PluginManager.getInstance().installPackage(filepath, 0);
-            if (i != PluginManager.INSTALL_FAILED_NO_REQUESTEDPERMISSION) {
-                PackageManager pm = DetailsInfoActivity.this.getPackageManager();
-//                "com.bigkoo.convenientbannerdemo"
-                Intent intent = pm.getLaunchIntentForPackage(packageInfo);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            } else {
-
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
+        if (PluginManager.getInstance().isConnected()) {
+            startLoad(filepath);
+        } else {
+            PluginManager.getInstance().addServiceConnection(this);
         }
     }
 
+    private void startLoad(String filepath) {
+//        if (ActivityCompat.checkSelfPermission(DetailsInfoActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            PackageManager pm = DetailsInfoActivity.this.getPackageManager();
+            final PackageInfo info = pm.getPackageArchiveInfo(filepath, 0);
+            try {
+                if (PluginManager.getInstance().getPackageInfo(info.packageName, 0) == null) {
+                    int re = PluginManager.getInstance().installPackage(filepath, 0);
+                    if (re == PluginManager.INSTALL_FAILED_NO_REQUESTEDPERMISSION) {
+                        Toast.makeText(DetailsInfoActivity.this, "启动异常，请重试", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
 
+                Intent intent = pm.getLaunchIntentForPackage(info.packageName);
+//                Intent.FLAG_ACTIVITY_NEW_TASK= 0x10000000
+//                Intent.FLAG_ACTIVITY_CLEAR_TOP = 0x04000000;
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+//        } else {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0x1);
+//            }
+//        }
+    }
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode == 0x1) {
+//            if (permissions != null && permissions.length > 0) {
+//                for (int i = 0; i < permissions.length; i++) {
+//                    String permisson = permissions[i];
+//                    int grantResult = grantResults[i];
+//                    if (Manifest.permission.READ_EXTERNAL_STORAGE.equals(permisson)) {
+//                        if (grantResult == PackageManager.PERMISSION_GRANTED) {
+////                            startLoadInner();
+//                        } else {
+//                            Toast.makeText(DetailsInfoActivity.this, "没有授权，无法使用", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                }
+//                for (String permisson : permissions) {
+//
+//                }
+//            }
+//        }
+//    }
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        PluginManager.getInstance().removeServiceConnection(this);
+        super.onDestroy();
+    }
 }

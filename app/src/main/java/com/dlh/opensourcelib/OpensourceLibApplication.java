@@ -1,8 +1,12 @@
 package com.dlh.opensourcelib;
 
+import android.app.Application;
+import android.content.Context;
+
 import com.dlh.opensourcelib.constants.Constants;
 import com.dlh.opensourcelib.utils.NetWorkUtil;
 import com.morgoo.droidplugin.PluginApplication;
+import com.morgoo.droidplugin.PluginHelper;
 import com.socks.library.KLog;
 import com.umeng.analytics.MobclickAgent;
 
@@ -16,13 +20,14 @@ import cn.bmob.v3.update.BmobUpdateAgent;
  * @@ -10,9 +14,15 @@ import com.morgoo.droidplugin.PluginApplication;
  * @DATE: 2016/4/19
  */
-public class OpensourceLibApplication extends PluginApplication {
+public class OpensourceLibApplication extends Application {
     public static OpensourceLibApplication application;
     public static boolean isNetWork = true;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        PluginHelper.getInstance().applicationOnCreate(getBaseContext());
         application = this;
         Bmob.initialize(application, Constants.BMOB_APP_ID);
 //        BmobUpdateAgent.initAppVersion(this);
@@ -43,5 +48,11 @@ public class OpensourceLibApplication extends PluginApplication {
         // MobclickAgent.startWithConfigure(
         // new UMAnalyticsConfig(mContext, "4f83c5d852701564c0000011", "Umeng", EScenarioType.E_UM_NORMAL));
         MobclickAgent.setScenarioType(application, MobclickAgent.EScenarioType.E_UM_NORMAL);
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        PluginHelper.getInstance().applicationAttachBaseContext(base);
+        super.attachBaseContext(base);
     }
 }
