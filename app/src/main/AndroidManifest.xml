@@ -3,7 +3,6 @@
     package="com.dlh.opensourcelib"
     android:versionCode="2"
     android:versionName="1.1">
-
     <!--允许联网 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!--获取GSM（2g）、WCDMA（联通3g）等网络状态的信息  -->

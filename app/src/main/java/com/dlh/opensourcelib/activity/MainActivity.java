@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private LeftDrawerLayout mLeftDrawerLayout;
     private String Tag = MainActivity.class.getSimpleName();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +38,14 @@ public class MainActivity extends AppCompatActivity {
         }
         mLeftDrawerLayout.setFluidView(mFlowingView);
         mLeftDrawerLayout.setMenuFragment((MyMenuFragment) mMenuFragment);
+
         Fragment mContentFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
         if (mContentFragment == null) {
             mContentFragment = new ContentFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.content_frame, mContentFragment).commit();
         }
     }
+
 
     @Override
     public void onResume() {

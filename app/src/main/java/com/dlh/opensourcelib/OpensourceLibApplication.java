@@ -13,6 +13,7 @@ import com.umeng.analytics.MobclickAgent;
 import net.sqlcipher.database.SQLiteDatabase;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobConfig;
 import cn.bmob.v3.update.BmobUpdateAgent;
 
 /**

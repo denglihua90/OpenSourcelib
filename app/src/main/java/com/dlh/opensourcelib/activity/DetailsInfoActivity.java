@@ -1,6 +1,5 @@
 package com.dlh.opensourcelib.activity;
 
-import android.Manifest;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -8,20 +7,20 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dlh.opensourcelib.BuildConfig;
 import com.dlh.opensourcelib.OpensourceLibApplication;
 import com.dlh.opensourcelib.R;
 import com.dlh.opensourcelib.bean.AppBean;
@@ -39,7 +38,12 @@ import com.umeng.analytics.MobclickAgent;
 import java.io.File;
 
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.DownloadFileListener;
+import cn.bmob.v3.listener.ProgressCallback;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.functions.Func1;
 
 /**
  * @TODO:APP详情
@@ -163,42 +167,15 @@ public class DetailsInfoActivity extends AppCompatActivity implements ServiceCon
                     if (appBean != null) {
                         String filePath = DetailsInfoActivity.this.getApplicationContext().getCacheDir() + "/apk/" + appBean.getTitle() + ".apk";
                         if (FileUtils.fileIsExists(filePath)) {
-                            startPlunActivity(filePath, appBean.getPackageInfo());
+                            startPlunActivity(filePath);
                         } else {
-
                             if (OpensourceLibApplication.isNetWork) {
                                 //允许设置下载文件的存储路径，默认下载文件的目录为：context.getApplicationContext().getCacheDir()+"/bmob/"
 //                        File saveFile = new File(Environment.getExternalStorageDirectory(), bmobFile.getFilename());
-                                cbProgressBar.setVisibility(View.VISIBLE);
-                                if (btn.getVisibility() == View.VISIBLE)
-                                    btn.setVisibility(View.GONE);
-                                File saveFile = new File(OpensourceLibApplication.application.getCacheDir() + "/apk/", appBean.getTitle() + ".apk");
-                                BmobFile bmobFile = appBean.getPlun();
-                                bmobFile.download(DetailsInfoActivity.this, saveFile, new DownloadFileListener() {
-                                    @Override
-                                    public void onProgress(Integer progress, long total) {
-                                        cbProgressBar.updateProgress(progress);
-                                        super.onProgress(progress, total);
-                                    }
-
-                                    @Override
-                                    public void onSuccess(String s) {
-                                        KLog.i("dlh", s);
-                                        startPlunActivity(s, appBean.getPackageInfo());
-                                        cbProgressBar.setVisibility(View.GONE);
-                                        if (btn.getVisibility() == View.GONE)
-                                            btn.setVisibility(View.VISIBLE);
-                                    }
-
-                                    @Override
-                                    public void onFailure(int i, String s) {
-                                        KLog.i("dlh", s);
-                                        cbProgressBar.setVisibility(View.GONE);
-                                        if (btn.getVisibility() == View.GONE)
-                                            btn.setVisibility(View.VISIBLE);
-                                    }
-
-                                });
+                                BmobFile bmobFile = new BmobFile(appBean.getTitle(), "", appBean.getPlun().getFileUrl());
+//                                KLog.d("DetailsInfoActivity", "bmobFile.getFileUrl" + bmobFile.getFileUrl());
+                                File saveFile = new File(OpensourceLibApplication.application.getCacheDir() + "/apk/", bmobFile.getFilename() + ".apk");
+                                download(bmobFile, saveFile);
                             } else {
                                 Toast.makeText(DetailsInfoActivity.this, DetailsInfoActivity.this.getResources().getString(R.string.net_hint), Toast.LENGTH_SHORT).show();
                             }
@@ -207,7 +184,7 @@ public class DetailsInfoActivity extends AppCompatActivity implements ServiceCon
                     } else if (favoritesBean != null) {
                         String filePath = DetailsInfoActivity.this.getApplicationContext().getCacheDir() + "/apk/" + favoritesBean.getTitle() + ".apk";
                         if (FileUtils.fileIsExists(filePath)) {
-                            startPlunActivity(filePath, favoritesBean.getPackageInfo());
+                            startPlunActivity(filePath);
                         } else {
                             if (OpensourceLibApplication.isNetWork) {
                                 File saveFile = new File(OpensourceLibApplication.application.getCacheDir() + "/apk/", favoritesBean.getTitle() + ".apk");
@@ -215,31 +192,7 @@ public class DetailsInfoActivity extends AppCompatActivity implements ServiceCon
                                 if (btn.getVisibility() == View.VISIBLE)
                                     btn.setVisibility(View.GONE);
                                 BmobFile bmobfile = new BmobFile(favoritesBean.getTitle(), "", favoritesBean.getPlunURL());
-                                bmobfile.download(DetailsInfoActivity.this, saveFile, new DownloadFileListener() {
-                                    @Override
-                                    public void onProgress(Integer progress, long total) {
-                                        cbProgressBar.updateProgress(progress);
-                                        super.onProgress(progress, total);
-                                    }
-
-                                    @Override
-                                    public void onSuccess(String s) {
-                                        KLog.i("dlh", s);
-                                        startPlunActivity(s, favoritesBean.getPackageInfo());
-                                        cbProgressBar.setVisibility(View.GONE);
-                                        if (btn.getVisibility() == View.GONE)
-                                            btn.setVisibility(View.VISIBLE);
-                                    }
-
-                                    @Override
-                                    public void onFailure(int i, String s) {
-                                        KLog.i("dlh", s);
-                                        cbProgressBar.setVisibility(View.GONE);
-                                        if (btn.getVisibility() == View.GONE)
-                                            btn.setVisibility(View.VISIBLE);
-                                    }
-
-                                });
+                                download(bmobfile, saveFile);
                             } else {
                                 Toast.makeText(DetailsInfoActivity.this, DetailsInfoActivity.this.getResources().getString(R.string.net_hint), Toast.LENGTH_SHORT).show();
                             }
@@ -269,17 +222,13 @@ public class DetailsInfoActivity extends AppCompatActivity implements ServiceCon
                             favoritesBean.setTitle(appBean.getTitle());
                             favoritesBean.setType(appBean.getType());
                             if (OpensourceLibApplication.isNetWork) {
-                                favoritesBean.setPlunURL(appBean.getPlun().getFileUrl(OpensourceLibApplication.application));
-                                favoritesBean.setThumbFileURL(appBean.getThumbFile().getFileUrl(OpensourceLibApplication.application));
+                                favoritesBean.setPlunURL(appBean.getPlun().getFileUrl());
+                                favoritesBean.setThumbFileURL(appBean.getThumbFile().getFileUrl());
                             } else {
                                 favoritesBean.setPlunURL(appBean.getPlunURL());
                                 favoritesBean.setThumbFileURL(appBean.getThumbFileURL());
                             }
                             FavoritesBeanDao.getDao().save(favoritesBean);
-//                        List<FavoritesBean> list = FavoritesBeanDao.getDao().queryAll();
-//                        for (int i = 0; i < list.size(); i++) {
-//                            Log.i("dlh", list.get(i).getTitle().toString());
-//                        }
                         }
 
 
@@ -318,6 +267,68 @@ public class DetailsInfoActivity extends AppCompatActivity implements ServiceCon
         }
     };
 
+    private void download(BmobFile bmobfile, File saveFile) {
+        bmobfile.downloadObservable(saveFile, new ProgressCallback() {
+            @Override
+            public void onProgress(Integer integer, long l) {
+                cbProgressBar.setVisibility(View.VISIBLE);
+                if (btn.getVisibility() == View.VISIBLE)
+                    btn.setVisibility(View.GONE);
+                KLog.d("dlh", "integer--->" + integer + "---->:" + l);
+                cbProgressBar.updateProgress(integer);
+            }
+        }).subscribe(new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+                cbProgressBar.setVisibility(View.GONE);
+                if (btn.getVisibility() == View.GONE)
+                    btn.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                cbProgressBar.setVisibility(View.GONE);
+                if (btn.getVisibility() == View.GONE)
+                    btn.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onNext(String s) {
+                if (!TextUtils.isEmpty(s)) {
+                    startPlunActivity(s);
+                }
+                KLog.d("dlh", "integer--->" + s);
+            }
+        });
+//        bmobfile.download(saveFile, new DownloadFileListener() {
+//            @Override
+//            public void onStart() {
+//                cbProgressBar.setVisibility(View.VISIBLE);
+//                if (btn.getVisibility() == View.VISIBLE)
+//                    btn.setVisibility(View.GONE);
+//            }
+//
+//            @Override
+//            public void done(String s, BmobException e) {
+//                if (e == null) {
+//                    startPlunActivity(s, appBean.getPackageInfo());
+//                    cbProgressBar.setVisibility(View.GONE);
+//                    if (btn.getVisibility() == View.GONE)
+//                        btn.setVisibility(View.VISIBLE);
+//
+//                } else {
+//                    cbProgressBar.setVisibility(View.GONE);
+//                    if (btn.getVisibility() == View.GONE)
+//                        btn.setVisibility(View.VISIBLE);
+//                }
+//            }
+//            @Override
+//            public void onProgress(Integer value, long newworkSpeed) {
+//                cbProgressBar.updateProgress(value);
+//            }
+//        });
+    }
+
     protected void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -330,7 +341,7 @@ public class DetailsInfoActivity extends AppCompatActivity implements ServiceCon
         });
     }
 
-    public void startPlunActivity(String filepath, String packageInfo) {
+    public void startPlunActivity(String filepath) {
         if (PluginManager.getInstance().isConnected()) {
             startLoad(filepath);
         } else {
@@ -340,25 +351,25 @@ public class DetailsInfoActivity extends AppCompatActivity implements ServiceCon
 
     private void startLoad(String filepath) {
 //        if (ActivityCompat.checkSelfPermission(DetailsInfoActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            PackageManager pm = DetailsInfoActivity.this.getPackageManager();
-            final PackageInfo info = pm.getPackageArchiveInfo(filepath, 0);
-            try {
-                if (PluginManager.getInstance().getPackageInfo(info.packageName, 0) == null) {
-                    int re = PluginManager.getInstance().installPackage(filepath, 0);
-                    if (re == PluginManager.INSTALL_FAILED_NO_REQUESTEDPERMISSION) {
-                        Toast.makeText(DetailsInfoActivity.this, "启动异常，请重试", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+        PackageManager pm = DetailsInfoActivity.this.getPackageManager();
+        final PackageInfo info = pm.getPackageArchiveInfo(filepath, 0);
+        try {
+            if (PluginManager.getInstance().getPackageInfo(info.packageName, 0) == null) {
+                int re = PluginManager.getInstance().installPackage(filepath, 0);
+                if (re == PluginManager.INSTALL_FAILED_NO_REQUESTEDPERMISSION) {
+                    Toast.makeText(DetailsInfoActivity.this, "启动异常，请重试", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+            }
 
-                Intent intent = pm.getLaunchIntentForPackage(info.packageName);
+            Intent intent = pm.getLaunchIntentForPackage(info.packageName);
 //                Intent.FLAG_ACTIVITY_NEW_TASK= 0x10000000
 //                Intent.FLAG_ACTIVITY_CLEAR_TOP = 0x04000000;
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
 //        } else {
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0x1);
@@ -404,4 +415,6 @@ public class DetailsInfoActivity extends AppCompatActivity implements ServiceCon
         PluginManager.getInstance().removeServiceConnection(this);
         super.onDestroy();
     }
+
+
 }

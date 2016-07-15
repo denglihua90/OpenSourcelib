@@ -7,6 +7,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,6 @@ import com.dlh.opensourcelib.R;
 import com.dlh.opensourcelib.activity.DetailsInfoActivity;
 import com.dlh.opensourcelib.bean.AppBean;
 import com.dlh.opensourcelib.db.dao.AppBeanDao;
-import com.dlh.opensourcelib.utils.NetWorkUtil;
 import com.pacific.adapter.RecyclerAdapter;
 import com.pacific.adapter.RecyclerAdapterHelper;
 import com.socks.library.KLog;
@@ -36,11 +36,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobDate;
-import cn.bmob.v3.listener.FindCallback;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import rx.Observable;
+import rx.Subscriber;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,6 +70,8 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
     private String lastTime = "";
     private final static int REFRESH = 101;
     private final static int LOAD_MORE = 102;
+
+    private int dateType = -1;
 
     /**
      * Use this factory method to create a new instance of
@@ -99,7 +103,6 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
 //            mParam2 = getArguments().getString(ARG_PARAM2);
 //        }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -221,84 +224,89 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
             // 跳过之前页数并去掉重复数据
             if (page != 0) {
                 query.setSkip(pageSize * page);
             }
         } else {
+            if (dateType != -1) {
+                query.addWhereEqualTo("type", dateType);
+            }
             page = 0;
             query.setSkip(page);
+
         }
         // 设置每页数据个数
         query.setLimit(pageSize);
-        query.findObjects(getActivity(), new FindCallback() {
-                    @Override
-                    public void onSuccess(JSONArray arg0) {
-                        //注意：查询的结果是JSONArray,需要自行解析
-                        KLog.i("dlh", "查询成功:" + arg0.toString());
-                        if (arg0 != null) {
-                            List<AppBean> list = JSON.parseArray(arg0.toString(), AppBean.class);
-                            if (list != null && list.size() > 0) {
-                                List<AppBean> tempList = new ArrayList<AppBean>();
-                                for (AppBean appBean : list) {
-                                    String imageUrl = appBean.getThumbFile().getFileUrl(OpensourceLibApplication.application);
-                                    String plunUrl = appBean.getPlun().getFileUrl(OpensourceLibApplication.application);
-                                    appBean.setThumbFileURL(imageUrl);
-                                    appBean.setPlunURL(plunUrl);
-                                    tempList.add(appBean);
-                                }
+        Observable<JSONArray> observable = query.findObjectsByTableObservable();
+        observable.subscribe(new Subscriber<JSONArray>() {
+            @Override
+            public void onCompleted() {
+            }
 
-                                if (type == REFRESH) {
-                                    swipeToLoadLayout.setRefreshing(false);
-                                    curPage = 0;
-                                    recyclerAdapter.clear();
-                                    // 获取最后时间
-                                    lastTime = list.get(list.size() - 1).getCreatedAt();
-                                    recyclerAdapter.addAll(tempList);
-                                } else {
-                                    // 获取最后时间
-                                    lastTime = list.get(list.size() - 1).getCreatedAt();
-                                    recyclerAdapter.addAll(tempList);
-                                    swipeToLoadLayout.setLoadingMore(false);
+            @Override
+            public void onError(Throwable e) {
+                KLog.i("bmob", "失败: " + e.getMessage());
+                if (type == REFRESH) {
+                    swipeToLoadLayout.setRefreshing(false);
+                } else {
+                    swipeToLoadLayout.setLoadingMore(false);
+                }
+            }
 
-                                }
-                                if (tempList.size() > 0) {
-                                    for (AppBean appBean : tempList) {
-                                        AppBeanDao.getDao().save(appBean);
-                                    }
+            @Override
+            public void onNext(JSONArray jsonArray) {
+                KLog.d("dlh", "jsonArray-->" + jsonArray);
+                if (jsonArray != null) {
+                    List<AppBean> list = JSON.parseArray(jsonArray.toString(), AppBean.class);
+                    if (list != null && list.size() > 0) {
+                        List<AppBean> tempList = new ArrayList<AppBean>();
+                        for (AppBean appBean : list) {
+                            String imageUrl = appBean.getThumbFile().getFileUrl();
+                            String plunUrl = appBean.getPlun().getFileUrl();
+                            appBean.setThumbFileURL(imageUrl);
+                            appBean.setPlunURL(plunUrl);
+                            tempList.add(appBean);
+                        }
 
-                                }
-                                curPage++;
-                            } else {
-                                if (type == REFRESH) {
-                                    swipeToLoadLayout.setRefreshing(false);
-                                } else {
-                                    swipeToLoadLayout.setLoadingMore(false);
-                                }
-                            }
+                        if (type == REFRESH) {
+                            swipeToLoadLayout.setRefreshing(false);
+                            curPage = 0;
+                            recyclerAdapter.clear();
+                            // 获取最后时间
+                            lastTime = list.get(list.size() - 1).getCreatedAt();
+                            recyclerAdapter.addAll(tempList);
                         } else {
-                            if (type == REFRESH) {
-                                swipeToLoadLayout.setRefreshing(false);
-                            } else {
-                                swipeToLoadLayout.setLoadingMore(false);
+                            // 获取最后时间
+                            lastTime = list.get(list.size() - 1).getCreatedAt();
+                            recyclerAdapter.addAll(tempList);
+                            swipeToLoadLayout.setLoadingMore(false);
+
+                        }
+                        if (tempList.size() > 0) {
+                            for (AppBean appBean : tempList) {
+                                AppBeanDao.getDao().save(appBean);
                             }
 
                         }
-                    }
-
-                    @Override
-                    public void onFailure(int arg0, String arg1) {
-                        KLog.i("dlh", "查询失败:" + arg1);
+                        curPage++;
+                    } else {
                         if (type == REFRESH) {
                             swipeToLoadLayout.setRefreshing(false);
                         } else {
                             swipeToLoadLayout.setLoadingMore(false);
                         }
                     }
-                }
+                } else {
+                    if (type == REFRESH) {
+                        swipeToLoadLayout.setRefreshing(false);
+                    } else {
+                        swipeToLoadLayout.setLoadingMore(false);
+                    }
 
-        );
+                }
+            }
+        });
     }
 
 

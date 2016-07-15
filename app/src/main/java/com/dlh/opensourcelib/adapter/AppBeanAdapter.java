@@ -41,7 +41,7 @@ public class AppBeanAdapter extends ArrayListAdapter<AppBean> {
         if (appBean != null) {
             if (appBean.getThumbFile() != null) {
 
-                Glide.with(mContext).load(appBean.getThumbFile().getFileUrl(mContext)).placeholder(R.drawable.plugin_activity_loading).error(R.drawable.plugin_activity_loading).into(holder.iv);
+                Glide.with(mContext).load(appBean.getThumbFile().getFileUrl()).placeholder(R.drawable.plugin_activity_loading).error(R.drawable.plugin_activity_loading).into(holder.iv);
             }
             if (!TextUtils.isEmpty(appBean.getTitle())) {
                 holder.tv.setText(appBean.getTitle());
