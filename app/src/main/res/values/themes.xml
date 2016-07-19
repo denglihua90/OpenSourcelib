@@ -2,7 +2,6 @@
 <resources>
 
 
-
     <style name="MMTheme.DataSheet" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>

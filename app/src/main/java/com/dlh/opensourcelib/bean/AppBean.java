@@ -51,12 +51,12 @@ public class AppBean extends BmobObject {
     }
 
     public AppBean() {
+        setTableName(table);
     }
 
     public AppBean(String tableName) {
-        this.setTableName(table);
+        super(tableName);
     }
-
 
     public Integer getType() {
         return type;

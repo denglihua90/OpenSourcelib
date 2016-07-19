@@ -5,6 +5,10 @@
             android:icon="@drawable/ic_global_menu_feed"
             android:title="本地收藏" />
         <item
+            android:id="@+id/menu_video_information"
+            android:icon="@drawable/ic_comment_outline_grey"
+            android:title="视频资料" />
+        <item
             android:id="@+id/menu_share"
             android:icon="@drawable/ic_global_menu_likes"
             android:title="应用分享" />

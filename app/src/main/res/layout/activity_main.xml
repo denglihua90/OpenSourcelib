@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.mxn.soul.flowingdrawer_core.LeftDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/id_drawerlayout"
+    android:id="@+id/top"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipChildren="false">
-    <!--content-->
-    <LinearLayout
-        android:id="@+id/top"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/view_feed_toolbar" />
+
+    <com.mxn.soul.flowingdrawer_core.LeftDrawerLayout
+        android:id="@+id/id_drawerlayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
-
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/view_feed_toolbar" />
-
+        android:layout_height="match_parent"
+        android:clipChildren="false">
+        <!--content-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,26 +25,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </RelativeLayout>
-    </LinearLayout>
-    <!--menu-->
-    <RelativeLayout
-        android:layout_width="280dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:clipChildren="false">
-
-        <com.mxn.soul.flowingdrawer_core.FlowingView
-            android:id="@+id/sv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <FrameLayout
-            android:id="@+id/id_container_menu"
-            android:layout_width="match_parent"
+        <!--menu-->
+        <RelativeLayout
+            android:layout_width="280dp"
             android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="25dp"
-            android:paddingRight="10dp" />
-    </RelativeLayout>
+            android:layout_gravity="start"
+            android:clipChildren="false">
+            <com.mxn.soul.flowingdrawer_core.FlowingView
+                android:id="@+id/sv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-</com.mxn.soul.flowingdrawer_core.LeftDrawerLayout>
+            <FrameLayout
+                android:id="@+id/id_container_menu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="25dp"
+                android:paddingRight="10dp" />
+        </RelativeLayout>
+
+    </com.mxn.soul.flowingdrawer_core.LeftDrawerLayout>
+</LinearLayout>

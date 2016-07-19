@@ -11,7 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
@@ -23,7 +25,13 @@ import com.dlh.opensourcelib.OpensourceLibApplication;
 import com.dlh.opensourcelib.R;
 import com.dlh.opensourcelib.activity.DetailsInfoActivity;
 import com.dlh.opensourcelib.bean.AppBean;
+import com.dlh.opensourcelib.bean.AppType;
 import com.dlh.opensourcelib.db.dao.AppBeanDao;
+import com.mingle.entity.MenuEntity;
+import com.mingle.sweetpick.BlurEffect;
+import com.mingle.sweetpick.NoneEffect;
+import com.mingle.sweetpick.RecyclerViewDelegate;
+import com.mingle.sweetpick.SweetSheet;
 import com.pacific.adapter.RecyclerAdapter;
 import com.pacific.adapter.RecyclerAdapterHelper;
 import com.socks.library.KLog;
@@ -73,6 +81,8 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
 
     private int dateType = -1;
 
+    private SweetSheet mSweetSheet;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -103,6 +113,7 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
 //            mParam2 = getArguments().getString(ARG_PARAM2);
 //        }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -143,7 +154,65 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
                 }
             }
         });
+        FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.framelayout);
+        mSweetSheet = new SweetSheet(frameLayout);
         return view;
+    }
+
+    public void showSweetSeet() {
+        if (mSweetSheet.isShow()) {
+            mSweetSheet.dismiss();
+        }
+        mSweetSheet.toggle();
+    }
+
+    public void setTypeMenu(final List<MenuEntity> list) {
+//        final ArrayList<MenuEntity> list = new ArrayList<>();
+//        //添加假数据
+//        MenuEntity menuEntity1 = new MenuEntity();
+//        menuEntity1.iconId = R.drawable.ic_account_child;
+//        menuEntity1.titleColor = 0xff000000;
+//        menuEntity1.title = "code";
+//        MenuEntity menuEntity = new MenuEntity();
+//        menuEntity.iconId = R.drawable.ic_account_child;
+//        menuEntity.titleColor = 0xffb3b3b3;
+//        menuEntity.title = "QQ";
+//        list.add(menuEntity1);
+//        list.add(menuEntity);
+//        list.add(menuEntity);
+//        list.add(menuEntity);
+//        list.add(menuEntity);
+//        list.add(menuEntity);
+//        list.add(menuEntity);
+//        list.add(menuEntity);
+//        list.add(menuEntity);
+//        list.add(menuEntity);
+//        list.add(menuEntity);
+//        list.add(menuEntity);
+//        list.add(menuEntity);
+        //设置数据源 (数据源支持设置 list 数组,也支持从菜单中获取)
+        mSweetSheet.setMenuList(list);
+        //根据设置不同的 Delegate 来显示不同的风格.
+        mSweetSheet.setDelegate(new RecyclerViewDelegate(true));
+        //根据设置不同Effect 来显示背景效果BlurEffect:模糊效果.DimEffect 变暗效果
+        mSweetSheet.setBackgroundEffect(new NoneEffect());
+        //设置点击事件
+        mSweetSheet.setOnMenuItemClickListener(new SweetSheet.OnMenuItemClickListener() {
+            @Override
+            public boolean onItemClick(int position, MenuEntity menuEntity1) {
+                //即时改变当前项的颜色
+                list.get(position).titleColor = 0xff5823ff;
+                ((RecyclerViewDelegate) mSweetSheet.getDelegate()).notifyDataSetChanged();
+
+                //根据返回值, true 会关闭 SweetSheet ,false 则不会.
+//                Toast.makeText(getActivity(), menuEntity1.title + "  " + position, Toast.LENGTH_SHORT).show();
+                dateType = menuEntity1.type;
+                queryData(0, REFRESH);
+
+                mSweetSheet.dismiss();
+                return false;
+            }
+        });
     }
 
     @Override
@@ -153,6 +222,7 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
             @Override
             public void run() {
                 swipeToLoadLayout.setRefreshing(true);
+
             }
         });
     }
@@ -189,6 +259,7 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
     public void onRefresh() {
         if (OpensourceLibApplication.isNetWork) {
             queryData(0, REFRESH);
+            queryType();
         } else {
             if (recyclerAdapter.getSize() > 0) {
                 recyclerAdapter.clear();
@@ -208,6 +279,9 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
     public void queryData(int page, final int type) {
         BmobQuery query = new BmobQuery(AppBean.table);
         query.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);
+        if (dateType != -1) {
+            query.addWhereEqualTo("type", dateType);
+        }
         // 按时间降序查询
         query.order("-createdAt");
         // 如果是加载更多
@@ -229,9 +303,6 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
                 query.setSkip(pageSize * page);
             }
         } else {
-            if (dateType != -1) {
-                query.addWhereEqualTo("type", dateType);
-            }
             page = 0;
             query.setSkip(page);
 
@@ -309,5 +380,41 @@ public class ContentFragment extends Fragment implements OnRefreshListener, OnLo
         });
     }
 
+    private void queryType() {
+        BmobQuery queryType = new BmobQuery(AppType.table);
+        queryType.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);
+        Observable<JSONArray> observable = queryType.findObjectsByTableObservable();
+        observable.subscribe(new Subscriber<JSONArray>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+
+            @Override
+            public void onNext(JSONArray jsonArray) {
+                if (jsonArray != null) {
+                    KLog.d("dlh", "jsonArray--->" + jsonArray);
+                    List<AppType> list = JSON.parseArray(jsonArray.toString(), AppType.class);
+                    if (list != null && list.size() > 0) {
+                        List<MenuEntity> menuEntities = new ArrayList<MenuEntity>();
+                        for (AppType appType : list) {
+                            MenuEntity menuEntity = new MenuEntity();
+                            menuEntity.title = appType.getType_title();
+                            menuEntity.type = appType.getType_id();
+                            menuEntity.titleColor = 0xff000000;
+                            menuEntities.add(menuEntity);
+                        }
+                        setTypeMenu(menuEntities);
+                    }
+                }
+
+            }
+        });
+    }
 
 }
